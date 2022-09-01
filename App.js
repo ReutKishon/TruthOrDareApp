@@ -2,23 +2,27 @@ import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import RegisterPage from "./components/RegisterPage";
 import Bottle from "./components/Bottle";
-
+import Header from "./components/Header";
+import CreateGame from "./components/CreateGame";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Bottle />
+      {/* <Header /> */}
+      {/* <Bottle /> */}
+
       {/* <RegisterPage /> */}
+      <CreateGame />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "#00bfff",
+    justifyContent: "space-between",
   },
 });
 export default App;
