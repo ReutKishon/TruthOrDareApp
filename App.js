@@ -4,14 +4,15 @@ import RegisterPage from "./components/RegisterPage";
 import Bottle from "./components/Bottle";
 import Header from "./components/Header";
 import CreateGame from "./components/CreateGame";
+import { NavigationContainer } from "@react-navigation/native";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <Header /> */}
       {/* <Bottle /> */}
-
-      {/* <RegisterPage /> */}
+{/*  */}
+      <RegisterPage />
       <CreateGame />
     </SafeAreaView>
   );

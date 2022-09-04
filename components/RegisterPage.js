@@ -6,9 +6,11 @@ import {
   Button,
   TouchableHighlight,
 } from "react-native";
+import CreateGame from "./CreateGame";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
-export default function RegisterPage() {
+export default function RegisterPage({ navigation }) {
   return (
     <View style={styles.container}>
       <TouchableHighlight>

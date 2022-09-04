@@ -1,37 +1,54 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Alert, Modal } from "react-native";
-import Dialog from "react-native-dialog";
-import CloseButton from "react-bootstrap/CloseButton";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Modal,
+  SafeAreaView,
+} from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
 
-function CreateGame(props) {
-  const [gameCode, setGameCode] = useState("");
+export default function CreateGame(props) {
+  const [gameCode, setGameCode] = useState("1236478");
   const [modalVisible, setModalVisible] = useState(props.modalVisible);
 
   return (
     <Modal visible={modalVisible}>
-      <View style={[styles.modalView, styles.centeredView]}>
-        <Text>your game code is: {gameCode} </Text>
-        <Text>Waiting for your friends to join in...</Text>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={[styles.modalView, styles.centeredView]}>
+          <Icon
+            onPress={() => {
+              setModalVisible(false);
+            }}
+            style={styles.icon}
+            name="close"
+            size={25}
+            color="white"
+          />
+          <Text style={{ margin: 4 }}>your game code is: {gameCode} </Text>
+          <Text>Waiting for your friends to join in...</Text>
+        </View>
       </View>
     </Modal>
   );
 }
 
-export default CreateGame;
-
 const styles = StyleSheet.create({
   centeredView: {
-    // flex: 0,
     justifyContent: "center",
     alignItems: "center",
   },
   modalView: {
-    margin: 20,
-    backgroundColor: "gray",
+    backgroundColor: "pink",
     borderRadius: 20,
-    padding: 35,
 
     width: 300,
-    height: 200,
+    height: 100,
+  },
+  icon: {
+    marginTop: -58,
+    position: "absolute",
+    left: 5, // Keep some space between your left border and Image
   },
 });
