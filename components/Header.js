@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 30,
-    fontFamily: "Silkscreen-Regular",
+    fontFamily: "Rajdhani-Bold",
     marginEnd: 15,
     marginStart: 15,
   },

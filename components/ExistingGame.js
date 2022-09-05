@@ -1,32 +1,25 @@
 import React, { useState } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  Button,
-} from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, View, Text } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import GameCodeModal from "./GameCodeModal";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [displayButton, setDisplayButton] = useState(false);
-  const [GameCode, setGameCode] = useState("");
+  const [gameCode, setGameCode] = useState("");
+  const [displayWarning, setDisplayWarning] = useState(false);
 
   const onKeyPress = () => {
-    if (GameCode.length === 0) setDisplayButton(false);
-    else setDisplayButton(true);
+    if (gameCode.length === 0) {
+      setDisplayButton(false);
+      setDisplayWarning(false);
+    } else setDisplayButton(true);
   };
 
-  const validatGameCode = (gameCode) => {};
-
-  const onPress = (gameCode) => {
+  const onPress = () => {
     var reg = /^\d+$/;
-    if (re.test(gameCode)) {
-      navigation.navigate("Home"); //navgate to the play screen
-    }
+    if (reg.test(gameCode)) {
+      navigation.navigate("PlayPage", { name: playerName });
+    } else setDisplayWarning(true);
   };
 
   return (
@@ -47,15 +40,23 @@ function NewGame({ navigation }) {
         placeholder="Please enter the code game"
         maxLength={10}
       />
+      <Text
+        style={[
+          styles.warningText,
+          { display: displayWarning ? "block" : "none" },
+        ]}
+      >
+        Code should only consists with digits!
+      </Text>
 
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={onPress}>
         <View
           style={[
             styles.button,
             { margin: 12, display: displayButton ? "block" : "none" },
           ]}
         >
-          <Text style={styles.text}>continue</Text>
+          <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#e0ffff",
     height: 50,
-    width: 200,
+    width: 300,
     border: "2px solid black",
   },
   button: {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     border: "2px solid black",
   },
 
-  text: {
+  textButton: {
     marginLeft: 25,
     marginTop: 25,
     marginBottom: 25,
@@ -101,6 +102,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: "black",
     fontWeight: "bold",
+  },
+  warningText: {
+    color: "red",
+    fontSize: 12,
   },
 });
 

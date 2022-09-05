@@ -5,6 +5,7 @@ import {
   View,
   Button,
   TouchableHighlight,
+  TouchableWithoutFeedback,
 } from "react-native";
 import CreateGame from "./GameCodeModal";
 import { NavigationContainer } from "@react-navigation/native";
@@ -13,18 +14,26 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 export default function RegisterPage({ navigation }) {
   return (
     <View style={styles.container}>
-      <TouchableHighlight>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate("NewGame");
+        }}
+      >
         <View style={styles.button}>
           <Text style={styles.text}>New game</Text>
         </View>
-      </TouchableHighlight>
-      <TouchableHighlight>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate("ExistingGame");
+        }}
+      >
         <View style={styles.button}>
           <Text style={styles.text} s>
             Play
           </Text>
         </View>
-      </TouchableHighlight>
+      </TouchableWithoutFeedback>
     </View>
   );
 }

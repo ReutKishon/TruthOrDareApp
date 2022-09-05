@@ -1,11 +1,13 @@
 import React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import Navigator from "./routes/homeStack";
+import Header from "./components/Header";
+import Constants from "expo-constants";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Header /> */}
+      <Header />
       {/* <Bottle /> */}
       {/*  */}
       {/* <RegisterPage /> */}
@@ -17,6 +19,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
+    // paddingTop: Constants.statusBarHeight,
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#00bfff",

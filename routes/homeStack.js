@@ -4,15 +4,23 @@ import App from "../App";
 import Home from "../components/Home";
 import NewGame from "../components/NewGame";
 import ExistingGame from "../components/ExistingGame";
+import PlayPage from "../components/PlayPage";
+import Player from "../components/Player";
 const screens = {
+  Home: {
+    screen: Home,
+  },
   ExistingGame: {
     screen: ExistingGame,
   },
   NewGame: {
     screen: NewGame,
   },
-  Home: {
-    screen: Home,
+  PlayPage: {
+    screen: PlayPage,
+  },
+  Player: {
+    screen: Player,
   },
 };
 const homeStack = createStackNavigator(screens);

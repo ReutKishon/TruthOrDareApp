@@ -38,11 +38,11 @@ function NewGame({ navigation }) {
       >
         <View
           style={[
-            styles.input,
+            styles.button,
             { margin: 12, display: displayButton ? "block" : "none" },
           ]}
         >
-          <Text style={styles.text}>continue</Text>
+          <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
       <GameCodeModal
@@ -68,20 +68,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#e0ffff",
     height: 50,
-    width: 200,
+    width: 300,
     border: "2px solid black",
   },
 
-  text: {
-    marginLeft: 50,
-    marginTop: 50,
-    marginBottom: 50,
+  textButton: {
+    marginLeft: 25,
+    marginTop: 25,
+    marginBottom: 25,
     fontSize: 16,
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
     fontWeight: "bold",
+  },
+  button: {
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    backgroundColor: "#e0ffff",
+    height: 50,
+    width: 150,
+    border: "2px solid black",
   },
 });
 
