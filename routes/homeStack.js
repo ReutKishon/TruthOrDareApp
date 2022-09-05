@@ -1,10 +1,18 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import App from "../App";
-import RegisterPage from "../components/RegisterPage";
+import Home from "../components/Home";
+import NewGame from "../components/NewGame";
+import ExistingGame from "../components/ExistingGame";
 const screens = {
-  RegisterPage: {
-    screen: RegisterPage,
+  ExistingGame: {
+    screen: ExistingGame,
+  },
+  NewGame: {
+    screen: NewGame,
+  },
+  Home: {
+    screen: Home,
   },
 };
 const homeStack = createStackNavigator(screens);

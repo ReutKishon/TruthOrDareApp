@@ -9,17 +9,22 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 
-export default function CreateGame(props) {
+export default function CreateGame({ visible, setParentVisible }) {
   const [gameCode, setGameCode] = useState("1236478");
-  const [modalVisible, setModalVisible] = useState(props.modalVisible);
+  const [modalVisible, setModalVisible] = useState(visible);
+
+  React.useEffect(() => {
+    setModalVisible(visible);
+  }, [visible]);
 
   return (
     <Modal visible={modalVisible}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <View style={[styles.modalView, styles.centeredView]}>
+        <View style={styles.modalView}>
           <Icon
             onPress={() => {
               setModalVisible(false);
+              setParentVisible(false);
             }}
             style={styles.icon}
             name="close"
@@ -35,20 +40,17 @@ export default function CreateGame(props) {
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
+  modalView: {
     justifyContent: "center",
     alignItems: "center",
-  },
-  modalView: {
     backgroundColor: "pink",
     borderRadius: 20,
-
     width: 300,
     height: 100,
   },
   icon: {
     marginTop: -58,
     position: "absolute",
-    left: 5, // Keep some space between your left border and Image
+    left: 5,
   },
 });

@@ -6,7 +6,7 @@ import {
   Button,
   TouchableHighlight,
 } from "react-native";
-import CreateGame from "./CreateGame";
+import CreateGame from "./GameCodeModal";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
