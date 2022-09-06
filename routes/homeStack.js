@@ -23,6 +23,12 @@ const screens = {
     screen: Player,
   },
 };
-const homeStack = createStackNavigator(screens);
+const homeStack = createStackNavigator(screens, {
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: "#black",
+    },
+  },
+});
 
 export default createAppContainer(homeStack);

@@ -5,15 +5,16 @@ import {
   TextInput,
   View,
   Text,
-  Button,
+  Picker,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import GameCodeModal from "./GameCodeModal";
+import StartGameModal from "./StartGameModal";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [displayButton, setDisplayButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [totalPlayers, setTotalPlayers] = useState(2);
 
   const onKeyPress = () => {
     if (playerName.length === 0) setDisplayButton(false);
@@ -30,7 +31,26 @@ function NewGame({ navigation }) {
         placeholder="Please enter your name"
         maxLength={10}
       />
-
+      <form style={{ marginTop: 15, marginBottom: 10 }}>
+        <label>
+          <Text style={{ fontSize: 20 }}>Select number of players</Text>: &ensp;
+          <Picker
+            selectedValue={totalPlayers}
+            style={styles.pickerStyle}
+            onValueChange={(itemValue, itemIndex) => setTotalPlayers(itemValue)}
+          >
+            <Picker.Item label="2" value="2" />
+            <Picker.Item label="3" value="3" />
+            <Picker.Item label="4" value="4" />
+            <Picker.Item label="5" value="5" />
+            <Picker.Item label="6" value="6" />
+            <Picker.Item label="7" value="7" />
+            <Picker.Item label="8" value="8" />
+            <Picker.Item label="9" value="9" />
+            <Picker.Item label="10" value="10" />
+          </Picker>
+        </label>
+      </form>
       <TouchableWithoutFeedback
         onPress={() => {
           setModalVisible(true);
@@ -45,9 +65,12 @@ function NewGame({ navigation }) {
           <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
-      <GameCodeModal
+
+      <StartGameModal
         visible={modalVisible}
         setParentVisible={setModalVisible}
+        total_players={totalPlayers}
+        navigation={navigation}
       />
     </SafeAreaView>
   );
@@ -92,6 +115,11 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     border: "2px solid black",
+  },
+  pickerStyle: {
+    height: 30,
+    width: 50,
+    borderRadius: 6,
   },
 });
 

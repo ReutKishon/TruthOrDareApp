@@ -1,17 +1,8 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-} from "react-native";
-import CreateGame from "./GameCodeModal";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import Header from "./Header";
 
-export default function RegisterPage({ navigation }) {
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback
@@ -43,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    top: 10,
+    top: -50,
     borderRadius: 10,
   },
   button: {

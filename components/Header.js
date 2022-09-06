@@ -1,7 +1,12 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
 
 export default function Header() {
+  const [fontsLoaded] = useFonts({
+    "Rajdhani-SemiBold": require("../assets/fonts/Rajdhani-SemiBold.ttf"),
+  });
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Truth</Text>
@@ -23,13 +28,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   image: {
-    height: 50,
-    width: 50,
+    height: 70,
+    width: 70,
     transform: [{ rotate: "90deg" }],
   },
   text: {
-    fontSize: 30,
-    fontFamily: "Rajdhani-Bold",
+    fontSize: 60,
+    fontFamily: "Rajdhani-SemiBold",
     marginEnd: 15,
     marginStart: 15,
   },

@@ -3,16 +3,15 @@ import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import Navigator from "./routes/homeStack";
 import Header from "./components/Header";
 import Constants from "expo-constants";
+import { View } from "react-native";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header />
-      {/* <Bottle /> */}
-      {/*  */}
-      {/* <RegisterPage /> */}
-      {/* <CreateGame /> */}
-      <Navigator />
+      <View style={{ top: 10, marginBottom: 10 }}>
+        <Header />
+      </View>
+      <Navigator style={{ backgroundColor: "00bfff" }} />
     </SafeAreaView>
   );
 };
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
     // paddingTop: Constants.statusBarHeight,
     flexDirection: "column",
     flex: 1,
-    backgroundColor: "#00bfff",
+    // backgroundColor: "#00bfff",
     justifyContent: "space-between",
   },
 });
