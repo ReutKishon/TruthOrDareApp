@@ -12,25 +12,39 @@ import StartGameModal from "./StartGameModal";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
-  const [displayButton, setDisplayButton] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [totalPlayers, setTotalPlayers] = useState(2);
+  const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
 
-  const onKeyPress = () => {
-    if (playerName.length === 0) setDisplayButton(false);
-    else setDisplayButton(true);
+  const onPress = () => {
+    if (playerName.length === 0) {
+      setEmptyFieldWarning(true);
+    } else setModalVisible(true);
+  };
+
+  const inputNameHandler = (name) => {
+    if (emptyFieldWarning) setEmptyFieldWarning(false);
+    setPlayerName(name);
   };
 
   return (
-    // problem: onKeyPress fires before onChangeText
     <SafeAreaView style={styles.container}>
       <TextInput
-        style={styles.input}
-        onChangeText={setPlayerName}
-        onKeyPress={onKeyPress}
+        style={[styles.input, { margin: 10 }]}
+        onChangeText={(name) => {
+          inputNameHandler(name);
+        }}
         placeholder="Please enter your name"
         maxLength={10}
       />
+      <Text
+        style={[
+          styles.warningText,
+          { display: emptyFieldWarning ? "block" : "none" },
+        ]}
+      >
+        The field is empty!
+      </Text>
       <form style={{ marginTop: 15, marginBottom: 10 }}>
         <label>
           <Text style={{ fontSize: 20 }}>Select number of players</Text>: &ensp;
@@ -51,17 +65,9 @@ function NewGame({ navigation }) {
           </Picker>
         </label>
       </form>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          setModalVisible(true);
-        }}
-      >
-        <View
-          style={[
-            styles.button,
-            { margin: 12, display: displayButton ? "block" : "none" },
-          ]}
-        >
+
+      <TouchableWithoutFeedback onPress={onPress}>
+        <View style={[styles.button, { margin: 12 }]}>
           <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -96,10 +102,7 @@ const styles = StyleSheet.create({
   },
 
   textButton: {
-    marginLeft: 25,
-    marginTop: 25,
-    marginBottom: 25,
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
@@ -120,6 +123,10 @@ const styles = StyleSheet.create({
     height: 30,
     width: 50,
     borderRadius: 6,
+  },
+  warningText: {
+    color: "red",
+    fontSize: 12,
   },
 });
 

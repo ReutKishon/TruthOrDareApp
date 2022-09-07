@@ -25,7 +25,7 @@ export default function StartGameModal({
 
   React.useEffect(() => {
     setModalVisible(visible);
-    settotalPlayers(totalplayers);
+    settotalPlayers(total_players);
   }, [visible, total_players]);
 
   return (
@@ -50,7 +50,11 @@ export default function StartGameModal({
           </Text>
           <TouchableHighlight
             onPress={() => {
-              navigation.navigate("PlayPage");
+              setModalVisible(false);
+              setParentVisible(false);
+              navigation.navigate("PlayPage", {
+                numberOfPlayers: totalplayers,
+              });
             }}
             style={styles.button}
           >

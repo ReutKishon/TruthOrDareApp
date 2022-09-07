@@ -4,22 +4,30 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
-  const [displayButton, setDisplayButton] = useState(false);
   const [gameCode, setGameCode] = useState("");
-  const [displayWarning, setDisplayWarning] = useState(false);
-
-  const onKeyPress = () => {
-    if (gameCode.length === 0) {
-      setDisplayButton(false);
-      setDisplayWarning(false);
-    } else setDisplayButton(true);
-  };
+  const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
+  const [syntaxWarning, setSyntaxWarning] = useState(false);
 
   const onPress = () => {
     var reg = /^\d+$/;
-    if (reg.test(gameCode)) {
-      navigation.navigate("PlayPage", { name: playerName });
-    } else setDisplayWarning(true);
+
+    if (playerName.length === 0 || gameCode.length === 0) {
+      setEmptyFieldWarning(true);
+    } else if (!reg.test(gameCode)) {
+      setSyntaxWarning(true);
+    } else navigation.navigate("PlayPage");
+  };
+
+  const inputNameHandler = (name) => {
+    if (emptyFieldWarning && gameCode.length != 0) setEmptyFieldWarning(false);
+    setPlayerName(name);
+  };
+
+  const inputCodeHandler = (code) => {
+    if (emptyFieldWarning && playerName.length != 0)
+      setEmptyFieldWarning(false);
+    setSyntaxWarning(false);
+    setGameCode(code);
   };
 
   return (
@@ -27,7 +35,9 @@ function NewGame({ navigation }) {
     <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.input}
-        onChangeText={setPlayerName}
+        onChangeText={(name) => {
+          inputNameHandler(name);
+        }}
         placeholder="Please enter your name"
         maxLength={10}
       />
@@ -35,27 +45,32 @@ function NewGame({ navigation }) {
       <TextInput
         style={[styles.input, { margin: 10 }]}
         keyboardType="numeric"
-        onChangeText={setGameCode}
-        onKeyPress={onKeyPress}
+        onChangeText={(code) => {
+          inputCodeHandler(code);
+        }}
         placeholder="Please enter the code game"
         maxLength={10}
       />
       <Text
         style={[
           styles.warningText,
-          { display: displayWarning ? "block" : "none" },
+          { display: syntaxWarning ? "block" : "none" },
         ]}
       >
         Code should only consists with digits!
       </Text>
 
+      <Text
+        style={[
+          styles.warningText,
+          { display: emptyFieldWarning ? "block" : "none" },
+        ]}
+      >
+        One of the fields is empty!
+      </Text>
+
       <TouchableWithoutFeedback onPress={onPress}>
-        <View
-          style={[
-            styles.button,
-            { margin: 12, display: displayButton ? "block" : "none" },
-          ]}
-        >
+        <View style={[styles.button, { margin: 12 }]}>
           <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
@@ -93,10 +108,7 @@ const styles = StyleSheet.create({
   },
 
   textButton: {
-    marginLeft: 25,
-    marginTop: 25,
-    marginBottom: 25,
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
