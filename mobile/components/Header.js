@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   image: {
-    height: 70,
-    width: 70,
+    height: 80,
+    width: 90
+    ,
     transform: [{ rotate: "90deg" }],
   },
   text: {

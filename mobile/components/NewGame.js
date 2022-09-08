@@ -6,11 +6,15 @@ import {
   View,
   Text,
   Picker,
+  Modal,
+  TouchableHighlight,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import StartGameModal from "./StartGameModal";
+import Header from "./Header";
+import Icon from "react-native-vector-icons/AntDesign";
 
 function NewGame({ navigation }) {
+  const [gameCode, setGameCode] = useState("1236478");
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [totalPlayers, setTotalPlayers] = useState(2);
@@ -29,6 +33,13 @@ function NewGame({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View
+        style={{
+          top: -100,
+        }}
+      >
+        <Header />
+      </View>
       <TextInput
         style={[styles.input, { margin: 10 }]}
         onChangeText={(name) => {
@@ -72,12 +83,36 @@ function NewGame({ navigation }) {
         </View>
       </TouchableWithoutFeedback>
 
-      <StartGameModal
-        visible={modalVisible}
-        setParentVisible={setModalVisible}
-        total_players={totalPlayers}
-        navigation={navigation}
-      />
+      <Modal transparent={true} visible={modalVisible}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={styles.modalView}>
+            <Icon
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              style={styles.icon}
+              name="close"
+              size={25}
+            />
+            <Text style={{ margin: 4 }}>
+              your game code is:{" "}
+              <Text style={{ fontWeight: "bold" }}>{gameCode}</Text>{" "}
+            </Text>
+            <Text>1 / {totalPlayers} are joined</Text>
+            <TouchableHighlight
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate("PlayPage");
+              }}
+              style={styles.modalButton}
+            >
+              <Text>Start game</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -127,6 +162,34 @@ const styles = StyleSheet.create({
   warningText: {
     color: "red",
     fontSize: 12,
+  },
+  modalView: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#e0ffff",
+    borderRadius: 20,
+    borderWidth: 2,
+    width: 400,
+    height: 180,
+  },
+  icon: {
+    marginTop: -135,
+    marginLeft: 4,
+    position: "absolute",
+    color: "black",
+    left: 5,
+  },
+  modalButton: {
+    marginTop: 20,
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    height: 30,
+    width: 100,
+    border: "2px solid black",
   },
 });
 

@@ -5,6 +5,14 @@ import Header from "./Header";
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          top: -100,
+        }}
+      >
+        <Header />
+      </View>
+
       <TouchableWithoutFeedback
         onPress={() => {
           navigation.navigate("NewGame");

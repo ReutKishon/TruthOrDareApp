@@ -8,16 +8,6 @@ import { View } from "react-native";
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#e0ffff",
-          flex: 0.1,
-        }}
-      >
-        <Header />
-      </View>
       <Navigator style={{ flex: 0.1, backgroundColor: "#e0ffff" }} />
     </SafeAreaView>
   );

@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, TextInput, View, Text } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+  Modal,
+} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import Header from "./Header";
+import Icon from "react-native-vector-icons/AntDesign";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
   const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
   const [syntaxWarning, setSyntaxWarning] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const onPress = () => {
     var reg = /^\d+$/;
@@ -15,7 +25,7 @@ function NewGame({ navigation }) {
       setEmptyFieldWarning(true);
     } else if (!reg.test(gameCode)) {
       setSyntaxWarning(true);
-    } else navigation.navigate("PlayPage");
+    } else setModalVisible(true);
   };
 
   const inputNameHandler = (name) => {
@@ -31,8 +41,14 @@ function NewGame({ navigation }) {
   };
 
   return (
-    // problem: onKeyPress fires before onChangeText
     <SafeAreaView style={styles.container}>
+      <View
+        style={{
+          top: -100,
+        }}
+      >
+        <Header />
+      </View>
       <TextInput
         style={styles.input}
         onChangeText={(name) => {
@@ -41,7 +57,6 @@ function NewGame({ navigation }) {
         placeholder="Please enter your name"
         maxLength={10}
       />
-
       <TextInput
         style={[styles.input, { margin: 10 }]}
         keyboardType="numeric"
@@ -59,7 +74,6 @@ function NewGame({ navigation }) {
       >
         Code should only consists with digits!
       </Text>
-
       <Text
         style={[
           styles.warningText,
@@ -68,12 +82,30 @@ function NewGame({ navigation }) {
       >
         One of the fields is empty!
       </Text>
-
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.button, { margin: 12 }]}>
           <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
+      <Modal transparent={true} visible={modalVisible}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={styles.modalView}>
+            <Icon
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              style={styles.icon}
+              name="close"
+              size={25}
+            />
+            <Text style={{ margin: 4 }}>
+              Waiting for the manager to start the game...
+            </Text>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -118,6 +150,22 @@ const styles = StyleSheet.create({
   warningText: {
     color: "red",
     fontSize: 12,
+  },
+  modalView: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#e0ffff",
+    borderRadius: 20,
+    borderWidth: 2,
+    width: 400,
+    height: 180,
+  },
+  icon: {
+    marginTop: -135,
+    marginLeft: 4,
+    position: "absolute",
+    color: "black",
+    left: 5,
   },
 });
 
