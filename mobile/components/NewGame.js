@@ -104,7 +104,9 @@ function NewGame({ navigation }) {
             <TouchableHighlight
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate("PlayPage");
+                navigation.navigate("PlayPage", {
+                  numberOfPlayers: totalPlayers,
+                });
               }}
               style={styles.modalButton}
             >

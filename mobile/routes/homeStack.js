@@ -22,6 +22,7 @@ const screens = {
   PlayPage: {
     screen: PlayPage,
   },
+
   Player: {
     screen: Player,
   },
