@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 
-function Player({ name, topPosition, leftPosition }) {
+function Player({ name }) {
   return (
-    <View style={[styles.container, { top: topPosition, left: leftPosition }]}>
+    <View style={[styles.container]}>
       <Animated.Image
         style={styles.imageStyle}
         source={require("../assets/bottle-cap.png")}

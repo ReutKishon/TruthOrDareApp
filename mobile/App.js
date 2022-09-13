@@ -1,25 +1,25 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
+
 import Navigator from "./routes/homeStack";
 import Header from "./components/Header";
 import Constants from "expo-constants";
 import { View } from "react-native";
+import PlayPage from "./components/PlayPage";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Navigator style={{ flex: 0.1, backgroundColor: "#e0ffff" }} />
+      {/*<Navigator style={{ flex: 0.1, backgroundColor: "#e0ffff" }} />*/}
+      <PlayPage />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // paddingTop: Constants.statusBarHeight,
-    // flexDirection: "column",
     flex: 1,
-    backgroundColor: "white",
-    // justifyContent: "space-between",
+    // backgroundColor: "white",
   },
 });
 export default App;
