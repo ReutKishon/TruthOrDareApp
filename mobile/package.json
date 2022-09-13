@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.0",
+    "@ramotion/react-native-circle-menu": "^1.0.0",
     "@react-native-picker/picker": "2.4.2",
     "@react-navigation/native": "^6.0.12",
     "@react-navigation/native-stack": "^6.8.0",
@@ -22,6 +23,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.0.0",
     "react-native": "0.69.5",
+    "react-native-circle-list": "^0.1.33",
     "react-native-dialog": "^9.2.2",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-number-please": "^1.0.5",

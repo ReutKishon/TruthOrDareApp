@@ -1,7 +1,29 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 
-function Player({ name }) {
+function Player({ name, sizeFactor }) {
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      position: "absolute",
+    },
+    imageStyle: {
+      height: sizeFactor,
+      width: sizeFactor,
+    },
+    viewTextStyle: {
+      position: "absolute",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    textStyle: {
+      fontSize: 10,
+    },
+  });
+
   return (
     <View style={[styles.container]}>
       <Animated.Image
@@ -15,24 +37,5 @@ function Player({ name }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-  },
-  imageStyle: {
-    height: 150,
-    width: 150,
-  },
-  viewTextStyle: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textStyle: {
-    fontSize: 20,
-  },
-});
+
 export default Player;

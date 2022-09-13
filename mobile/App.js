@@ -11,7 +11,9 @@ const App = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/*<Navigator style={{ flex: 0.1, backgroundColor: "#e0ffff" }} />*/}
-      <PlayPage />
+      <View style={{height: '80%'}}>
+        <PlayPage />
+      </View>
     </SafeAreaView>
   );
 };
