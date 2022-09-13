@@ -26,7 +26,7 @@ export default function Bottle() {
 
   const rotateData = rotateValueHolder.interpolate({
     inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
+    outputRange: ["90deg", "360deg"],
   });
 
   return (
@@ -40,14 +40,9 @@ export default function Bottle() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   image: {
     height: 250,
     width: 250,
+    
   },
 });

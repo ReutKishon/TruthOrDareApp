@@ -14,37 +14,40 @@ function PlayPage({ navigation }) {
   let angle = (2 * Math.PI) / numberOfPlayers;
 
   for (let i = 0; i < numberOfPlayers; i++) {
-    angle = angle * i;
-    let x = Math.cos(angle) * 200;
-    let y = Math.sin(angle) * 200;
-    let top = y + 200 + "px";
-    let left = x + 200 + "px";
-
+    let new_angle = angle * i;
+    let x = Math.cos(new_angle) * 250;
+    let y = Math.sin(new_angle) * 250;
+    let top = y - 150 + "px";
+    let left = x - 150 + "px";
     result.push(
-      <View>
-        {" "}
-        <Player
-          key={i}
-          name="Reut"
-          topPosition={top}
-          leftPosition={left}
-        ></Player>
+      <View key={i.toString()}>
+        <Player name="Reut" topPosition={top} leftPosition={left}></Player>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      {/* <Player leftPosition={"400px"} topPosition={"200px"}></Player>
-      <Player leftPosition={"800px"} topPosition={"400px"}></Player> */}
-      {result}
+    <View>
+      <View style={styles.bottleStyle}>
+        <Bottle />
+      </View>
+      <View style={styles.playersCircleStyle}>{result}</View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  playersCircleStyle: {
     flex: 1,
+    alignItems: "center",
+    left: 80,
+    top: 400,
+  },
+  bottleStyle: {
+    flex: 1,
+    alignItems: "center",
+    left: 30,
+    top: 320,
   },
 });
 export default PlayPage;

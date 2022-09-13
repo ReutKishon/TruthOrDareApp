@@ -79,7 +79,7 @@ function NewGame({ navigation }) {
 
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.button, { margin: 12 }]}>
-          <Text style={styles.textButton}>continue</Text>
+          <Text style={styles.textButton}>go</Text>
         </View>
       </TouchableWithoutFeedback>
 
