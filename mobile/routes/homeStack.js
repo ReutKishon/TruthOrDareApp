@@ -3,10 +3,10 @@ import React, { Component } from "react";
 
 import { createAppContainer } from "react-navigation";
 import App from "../App";
-import Home from "../components/Home";
-import NewGame from "../components/NewGame";
+import Home from "../screens/Home";
+import NewGame from "../screens/NewGame";
 import ExistingGame from "../components/ExistingGame";
-import PlayPage from "../components/PlayPage";
+import PlayPage from "../screens/PlayPage";
 import Player from "../components/Player";
 import Header from "../components/Header";
 const screens = {

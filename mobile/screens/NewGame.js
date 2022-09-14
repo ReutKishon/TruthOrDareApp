@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Header from "./Header";
+import Header from "../components/Header";
 import Icon from "react-native-vector-icons/AntDesign";
 
 function NewGame({ navigation }) {

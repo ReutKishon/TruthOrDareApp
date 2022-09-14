@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   StyleSheet,
   // Text,
@@ -8,9 +8,16 @@ import {
   Animated,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useState } from "react";
 
-export default function Bottle() {
-  // atan2(y2 - y1, x2 - x1) * 180 / PI
+export default function Bottle({ size = 250 }) {
+  const styles = StyleSheet.create({
+    image: {
+      height: size,
+      width: size,
+    },
+  });
+  const [randomDeg, setRandomDeg] = useState(generateRandomDegree());
 
   let rotateValueHolder = new Animated.Value(0);
 
@@ -18,15 +25,21 @@ export default function Bottle() {
     rotateValueHolder.setValue(0);
     Animated.timing(rotateValueHolder, {
       toValue: 1,
-      duration: 3000,
+      duration: 4000,
       easing: Easing.linear,
       useNativeDriver: false,
-    }).start();
+    }).start(() => {
+      setRandomDeg(generateRandomDegree());
+    });
   };
 
+  function generateRandomDegree() {
+    return Math.floor(Math.random() * 361);
+  }
+
   const rotateData = rotateValueHolder.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["90deg", "360deg"],
+    inputRange: [0, 0.5, 0.8, 1],
+    outputRange: ["90deg", "450deg", "810deg", 810 + randomDeg + "deg"],
   });
 
   return (
@@ -38,11 +51,3 @@ export default function Bottle() {
     </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    height: 250,
-    width: 250,
-    
-  },
-});

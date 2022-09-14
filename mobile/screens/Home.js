@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
-import Header from "./Header";
+import Header from "../components/Header";
 
 export default function Home({ navigation }) {
   return (
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     lineHeight: 21,
-    fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
     fontWeight: "bold",
