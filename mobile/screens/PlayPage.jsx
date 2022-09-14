@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Text, View, StyleSheet, Dimensions} from "react-native";
+import {Text, View, StyleSheet, Dimensions, Button, Pressable} from "react-native";
 import Player from "../components/Player";
 import Bottle from "../components/Bottle";
 
@@ -11,30 +11,43 @@ function isWeb() {
     return windowHeight / windowWidth < 1;
 }
 
+function generatePlayerState() {
+    const id = Math.floor(Math.random() * 100)
+    return {
+        name: "Player " + id,
+        id
+    };
+}
+
 function PlayPage({navigation}) {
-    const [numberOfPlayers, setNumberOfPlayers] = useState(13);
+
+    const players = Array.from({length: 10}, (_, i) => generatePlayerState());
+
+
+    console.log(players);
 
     function degToRad(deg) {
         return deg * Math.PI / 180;
     }
 
     let result = [];
-    let angleIncrease = 360 / numberOfPlayers;
+    let angleIncrease = 360 / players.length;
     let angle = 0;
 
-    const playSizeFactor = isWeb() ? 200 : 100;
+    const playerSizeFactor = isWeb() ? 200 : 100;
+    const [playerIconSizes, setPlayerIconSizes] = useState(players.map(() => playerSizeFactor))
+
     const spaceFactor = isWeb() ? 300 : 130;
 
-    for (let i = 0; i < numberOfPlayers; i++) {
+    for (let i = 0; i < players.length; i++) {
         angle = degToRad(i * angleIncrease);
         const x = Math.cos(angle) * spaceFactor;
         const y = Math.sin(angle) * spaceFactor;
 
         result.push(
-            <View style={{top: y, left: x}}>
+            <View style={{top: y, left: x}} key={i}>
                 <Player
-                    sizeFactor={playSizeFactor}
-                    key={i}
+                    sizeFactor={playerIconSizes[i]}
                     name={`Player ${i}`}
                 ></Player>
             </View>
@@ -51,6 +64,27 @@ function PlayPage({navigation}) {
             </View>
         </View>
     );
+
+
+    function spinPlayers() {
+        let i = 0;
+        const iconSizes = [...playerIconSizes]
+
+        function loop() {
+            setTimeout(() => {
+                const tempIconSize = [...iconSizes]
+                tempIconSize[i] = playerIconSizes[i] * 1.1
+                setPlayerIconSizes(tempIconSize)
+                i++;
+                if (i < players.length) {
+                    loop();
+                }
+            }, 100)
+        }
+
+        loop()
+        setPlayerIconSizes(playerIconSizes)
+    }
 }
 
 const styles = StyleSheet.create({
@@ -66,7 +100,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: isWeb() ? 300 : 280,
         left: isWeb() ? 300 : 125,
-        size: isWeb()? 300: 150,
+        size: isWeb() ? 300 : 150,
     }
 });
 export default PlayPage;
