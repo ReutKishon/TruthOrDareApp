@@ -9,9 +9,13 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-export default function Bottle() {
-  // atan2(y2 - y1, x2 - x1) * 180 / PI
-
+export default function Bottle({size= 250}) {
+  const styles = StyleSheet.create({
+    image: {
+      height: size,
+      width: size,
+    },
+  });
   let rotateValueHolder = new Animated.Value(0);
 
   const startImageRotationFunction = () => {
@@ -39,15 +43,4 @@ export default function Bottle() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  image: {
-    height: 250,
-    width: 250,
-  },
-});
+

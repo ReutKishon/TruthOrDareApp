@@ -10,6 +10,7 @@ console.log(`dimensions: ${windowWidth} ${windowHeight}`);
 function isWeb() {
     return windowHeight / windowWidth < 1;
 }
+
 function PlayPage({navigation}) {
     const [numberOfPlayers, setNumberOfPlayers] = useState(13);
 
@@ -23,19 +24,18 @@ function PlayPage({navigation}) {
 
     const playSizeFactor = isWeb() ? 200 : 100;
     const spaceFactor = isWeb() ? 300 : 130;
-    const centerFactor = isWeb() ? 400 : 55;
+
     for (let i = 0; i < numberOfPlayers; i++) {
         angle = degToRad(i * angleIncrease);
-        const x = Math.cos(angle) * spaceFactor - centerFactor;
+        const x = Math.cos(angle) * spaceFactor;
         const y = Math.sin(angle) * spaceFactor;
 
-        console.log(`angle: ${i * angleIncrease}, x: ${x}, y: ${y}`);
         result.push(
             <View style={{top: y, left: x}}>
                 <Player
                     sizeFactor={playSizeFactor}
                     key={i}
-                    name="Reut"
+                    name={`Player ${i}`}
                 ></Player>
             </View>
         );
@@ -43,16 +43,30 @@ function PlayPage({navigation}) {
 
     return (
         <View style={styles.container}>
-            {result}
+            <View style={styles.playersCircle}>
+                {result}
+            </View>
+            <View style={styles.bottle}>
+                <Bottle size={styles.bottle.size}/>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
+        position: "relative",
+    },
+    playersCircle: {
+        position: "absolute",
+        top: isWeb() ? 350 : 300,
+        left: isWeb() ? 350 : 150,
+    },
+    bottle: {
+        position: "absolute",
+        top: isWeb() ? 300 : 280,
+        left: isWeb() ? 300 : 125,
+        size: isWeb()? 300: 150,
     }
 });
 export default PlayPage;
