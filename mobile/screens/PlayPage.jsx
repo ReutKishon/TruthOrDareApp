@@ -25,24 +25,23 @@ function generatePlayerState() {
 function PlayPage() {
     const dispatch = useDispatch()
     dispatch(initFakePlayers())
-    const game = useSelector(state => state.game)
-    console.log(game)
 
+    const players = useSelector(state => state.game.players)
 
     function degToRad(deg) {
         return deg * Math.PI / 180;
     }
 
     let result = [];
-    let angleIncrease = 360 / game.players.length;
+    let angleIncrease = 360 / players.length;
     let angle = 0;
 
     const playerSizeFactor = isWeb() ? 200 : 100;
-    const [playerIconSizes, setPlayerIconSizes] = useState(game.players.map(() => playerSizeFactor))
+    const [playerIconSizes, setPlayerIconSizes] = useState(players.map(() => playerSizeFactor))
 
     const spaceFactor = isWeb() ? 300 : 130;
 
-    for (let i = 0; i < game.players.length; i++) {
+    for (let i = 0; i < players.length; i++) {
         angle = degToRad(i * angleIncrease);
         const x = Math.cos(angle) * spaceFactor;
         const y = Math.sin(angle) * spaceFactor;
