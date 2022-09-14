@@ -2,6 +2,9 @@ import React, {useState} from "react";
 import {Text, View, StyleSheet, Dimensions, Button, Pressable} from "react-native";
 import Player from "../components/Player";
 import Bottle from "../components/Bottle";
+// import Bottle from "../components/SpinnableBottle";
+import {useDispatch, useSelector} from "react-redux";
+import {initFakePlayers} from "../app/game-slice";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,27 +22,27 @@ function generatePlayerState() {
     };
 }
 
-function PlayPage({navigation}) {
+function PlayPage() {
+    const dispatch = useDispatch()
+    dispatch(initFakePlayers())
+    const game = useSelector(state => state.game)
+    console.log(game)
 
-    const players = Array.from({length: 10}, (_, i) => generatePlayerState());
-
-
-    console.log(players);
 
     function degToRad(deg) {
         return deg * Math.PI / 180;
     }
 
     let result = [];
-    let angleIncrease = 360 / players.length;
+    let angleIncrease = 360 / game.players.length;
     let angle = 0;
 
     const playerSizeFactor = isWeb() ? 200 : 100;
-    const [playerIconSizes, setPlayerIconSizes] = useState(players.map(() => playerSizeFactor))
+    const [playerIconSizes, setPlayerIconSizes] = useState(game.players.map(() => playerSizeFactor))
 
     const spaceFactor = isWeb() ? 300 : 130;
 
-    for (let i = 0; i < players.length; i++) {
+    for (let i = 0; i < game.players.length; i++) {
         angle = degToRad(i * angleIncrease);
         const x = Math.cos(angle) * spaceFactor;
         const y = Math.sin(angle) * spaceFactor;
