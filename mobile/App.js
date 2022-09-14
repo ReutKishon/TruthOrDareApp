@@ -5,7 +5,7 @@ import Navigator from "./routes/homeStack";
 import Header from "./components/Header";
 import Constants from "expo-constants";
 import { View } from "react-native";
-import PlayPage from "./components/PlayPage";
+import PlayPage from "./screens/PlayPage";
 
 const App = () => {
   return (
