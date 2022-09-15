@@ -59,7 +59,7 @@ function PlayerIcon({ sizeFactor, info } : { sizeFactor: number, info: Player })
     <View style={[styles.container]} ref={componentElementRef} >
       <Animated.Image
         style={styles.imageStyle}
-        source={require("../assets/bottle-cap.png")}
+        source={require("../../assets/bottle-cap.png")}
       ></Animated.Image>
       <View style={styles.viewTextStyle}>
         <Text style={styles.textStyle}>{info.name}</Text>

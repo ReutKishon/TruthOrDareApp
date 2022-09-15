@@ -64,7 +64,7 @@ export default function Bottle(props) {
           ref={bottleImageRef}
           {...panResponder.panHandlers}
           style={[styles(props).image, { transform: [{ rotate: rotationInfo }] }]}
-        source={require("../assets/beer-bottle2.png")}
+        source={require("../../assets/beer-bottle2.png")}
       ></Animated.Image>
   );
 }
