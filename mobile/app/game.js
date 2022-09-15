@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-export const gameSlice = createSlice({
+export const game = createSlice({
     name: 'game',
     initialState: {
         players: [],
@@ -15,7 +15,7 @@ export const gameSlice = createSlice({
                     id
                 };
             }
-            state.players = Array.from({length: 10}, (_, i) => generatePlayer());
+            state.players = Array.from({length: 10}, () => generatePlayer());
         },
         setBottleRotation: (state, rotation) => {
             state.bottleRotation = rotation
@@ -25,6 +25,6 @@ export const gameSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { initFakePlayers, setBottleRotation } = gameSlice.actions
+export const { initFakePlayers, setBottleRotation } = game.actions
 
-export default gameSlice.reducer
+export default game.reducer

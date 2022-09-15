@@ -4,7 +4,7 @@ import Player from "../components/Player";
 import Bottle from "../components/Bottle";
 // import Bottle from "../components/SpinnableBottle";
 import {useDispatch, useSelector} from "react-redux";
-import {initFakePlayers} from "../app/game-slice";
+import {initFakePlayers} from "../app/game";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

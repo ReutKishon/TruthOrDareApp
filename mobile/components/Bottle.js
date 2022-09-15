@@ -7,7 +7,7 @@ import {
 import throttle from "lodash.throttle";
 
 import {useDispatch, useSelector} from "react-redux";
-import {setBottleRotation} from "../app/game-slice";
+import {setBottleRotation} from "../app/game";
 
 export default function Bottle({ size = 250 }) {
   const dispatch = useDispatch()
