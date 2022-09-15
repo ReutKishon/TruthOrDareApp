@@ -1,10 +1,10 @@
 import React, {useEffect, useRef, useState} from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import {radToDeg} from "../utils";
-import {useSelector} from "react-redux";
 import {useAppSelector} from "../app/hooks";
+import {Player} from "../app/models";
 
-function Player({ name, sizeFactor }) {
+function PlayerIcon({ sizeFactor, info } : { sizeFactor: number, info: Player }) {
 
   const originalSize = sizeFactor
   const [iconSize, setIconSize] = useState(sizeFactor)
@@ -62,11 +62,11 @@ function Player({ name, sizeFactor }) {
         source={require("../assets/bottle-cap.png")}
       ></Animated.Image>
       <View style={styles.viewTextStyle}>
-        <Text style={styles.textStyle}>{name}</Text>
+        <Text style={styles.textStyle}>{info.name}</Text>
       </View>
     </View>
   );
 }
 
 
-export default Player;
+export default PlayerIcon;

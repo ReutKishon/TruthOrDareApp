@@ -10,16 +10,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {putBottleCoordinates, setBottleAngle, setBottleRotation} from "../app/game";
 import {isWeb} from "../utils";
 
-export default function Bottle({ size = 250 }) {
+export default function Bottle(props) {
   const dispatch = useDispatch()
-  const bottleImageRef = useRef(null);
 
-  const styles = StyleSheet.create({
-    image: {
-      height: size,
-      width: size,
-    },
-  });
+  const bottleImageRef = useRef(null);
 
   useEffect(() => {
     if (bottleImageRef) {
@@ -69,8 +63,15 @@ export default function Bottle({ size = 250 }) {
       <Animated.Image
           ref={bottleImageRef}
           {...panResponder.panHandlers}
-          style={[styles.image, { transform: [{ rotate: rotationInfo }] }]}
+          style={[styles(props).image, { transform: [{ rotate: rotationInfo }] }]}
         source={require("../assets/beer-bottle2.png")}
       ></Animated.Image>
   );
 }
+
+const styles = ({size =250}) => StyleSheet.create({
+  image: {
+    height: size,
+    width: size,
+  },
+});

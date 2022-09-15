@@ -1,25 +1,17 @@
-import React, {useEffect, useState} from "react";
-import {Text, View, StyleSheet, Dimensions, Button, Pressable} from "react-native";
-import Player from "../components/Player";
+import React from "react";
+import {View, StyleSheet} from "react-native";
+import PlayerIcon from "../components/PlayerIcon";
 import Bottle from "../components/Bottle";
-import {useDispatch, useSelector} from "react-redux";
-import {initFakePlayers} from "../app/game";
 import {degToRad, isWeb} from "../utils";
 import {useAppSelector} from "../app/hooks";
 
 
 function Main() {
-    const dispatch = useDispatch()
-    dispatch(initFakePlayers())
-
     const players = useAppSelector(state => state.game.players)
 
     let playerComponents = [];
     let angleIncrease = 360 / players.length;
-
-    const playerSizeFactor = isWeb() ? 200 : 100;
-    const [playerIconSizes, setPlayerIconSizes] = useState(players.map(() => playerSizeFactor))
-
+    const playerIconSize = isWeb() ? 200 : 100;
     const spaceFactor = isWeb() ? 300 : 130;
 
     for (let i = 0; i < players.length; i++) {
@@ -29,18 +21,13 @@ function Main() {
 
         playerComponents.push(
             <View style={{top: y, left: x}} key={i}>
-                <Player
-                    sizeFactor={playerIconSizes[i]}
-                    name={`Player ${i}`}
-                ></Player>
+                <PlayerIcon
+                    info={players[i]}
+                    sizeFactor={playerIconSize}
+                ></PlayerIcon>
             </View>
         );
     }
-
-    useEffect(() => {
-
-
-    },[])
 
     return (
         <View style={styles.container}>
@@ -70,4 +57,6 @@ const styles = StyleSheet.create({
         size: isWeb() ? 300 : 150,
     }
 });
+
+
 export default Main;

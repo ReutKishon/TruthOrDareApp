@@ -1,11 +1,7 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { useFonts } from "expo-font";
 
 export default function Header() {
-  const [fontsLoaded] = useFonts({
-    "Rajdhani-SemiBold": require("../assets/fonts/Rajdhani-SemiBold.ttf"),
-  });
 
   return (
     <View style={styles.container}>

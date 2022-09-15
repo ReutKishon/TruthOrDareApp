@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {RootState} from "./store";
+import {Player} from "./models";
 
-
-interface Player {
-    name:string
-    id: number
-}
 
 interface GameState {
     players: Player[],
