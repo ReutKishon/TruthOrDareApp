@@ -7,7 +7,7 @@ import {
 import throttle from "lodash.throttle";
 
 import {useDispatch, useSelector} from "react-redux";
-import {setBottleRotation} from "../app/game";
+import {setBottleAngle, setBottleRotation} from "../app/game";
 
 export default function Bottle({ size = 250 }) {
   const dispatch = useDispatch()
@@ -20,15 +20,14 @@ export default function Bottle({ size = 250 }) {
   });
 
   useEffect(() => {
-    console.log("Bottle mounted");
     rotationAnimation.addListener(throttle(({ value }) => {
+      dispatch(setBottleAngle((value/100)*360))
       dispatch(setBottleRotation(value))
     }, 1000))
   }, [])
+
   // Spinner
   const rotationAnimation = new Animated.Value(0);
-
-
 
   let spinning = false
   const panResponder = PanResponder.create({
@@ -52,8 +51,8 @@ export default function Bottle({ size = 250 }) {
   });
 
   const rotationInfo = rotationAnimation.interpolate({
-    inputRange: [-100, 0,  100],
-    outputRange: ['-360deg', '0deg', '360deg'],
+    inputRange: [0, 100],
+    outputRange: ['0deg', '360deg'],
   });
 
   return (

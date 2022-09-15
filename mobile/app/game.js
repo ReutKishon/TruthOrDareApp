@@ -5,6 +5,7 @@ export const game = createSlice({
     initialState: {
         players: [],
         bottleRotation: 0,
+        bottleAngle: 0,
     },
     reducers: {
         initFakePlayers: state => {
@@ -20,11 +21,15 @@ export const game = createSlice({
         setBottleRotation: (state, rotation) => {
             state.bottleRotation = rotation
             console.log(state.bottleRotation)
+        },
+        setBottleAngle: (state, angle) => {
+            state.bottleAngle = angle
+            console.log(state.bottleAngle)
         }
     }
 })
 
 // Action creators are generated for each case reducer function
-export const { initFakePlayers, setBottleRotation } = game.actions
+export const { initFakePlayers, setBottleRotation, setBottleAngle } = game.actions
 
 export default game.reducer

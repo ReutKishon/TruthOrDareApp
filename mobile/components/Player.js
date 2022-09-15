@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
+import {radToDeg} from "../utils";
 
 function Player({ name, sizeFactor }) {
 
@@ -24,8 +25,21 @@ function Player({ name, sizeFactor }) {
     },
   });
 
+  const ref = useRef();
+  ref.current = {}
+
+  useEffect(() => {
+    if (ref.current._ref) {
+      ref.current._ref.measure((width, height, px, py, fx, fy) => {
+        console.log(`${name} x: ${fx}, y: ${fy} angle:${radToDeg(Math.atan(fy/fx))} `)
+      })
+    }
+
+
+  },[])
+
   return (
-    <View style={[styles.container]}>
+    <View style={[styles.container]} ref={(r) => { ref.current._ref = r;} } >
       <Animated.Image
         style={styles.imageStyle}
         source={require("../assets/bottle-cap.png")}
