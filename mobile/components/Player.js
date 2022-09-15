@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import {radToDeg} from "../utils";
+import {useSelector} from "react-redux";
 
 function Player({ name, sizeFactor }) {
 
+  const originalSize = sizeFactor
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -26,17 +28,31 @@ function Player({ name, sizeFactor }) {
   });
 
   const ref = useRef();
-  ref.current = {}
+  ref.current = {};
+
+  const bottleCoordinates = useSelector(state => state.game.bottleCoordinates)
+  const bottleAngle = useSelector(state => state.game.bottleAngle)
 
   useEffect(() => {
-    if (ref.current._ref) {
+    if (ref.current._ref && bottleCoordinates) {
+      console.log(bottleCoordinates)
+      const bottleXY = {...bottleCoordinates.payload}
       ref.current._ref.measure((width, height, px, py, fx, fy) => {
-        console.log(`${name} x: ${fx}, y: ${fy} angle:${radToDeg(Math.atan(fy/fx))} `)
+        // console.log(`Calculating angle between bottle and player ${bottleXY.x} ${bottleXY.y} ${fx} ${fy}`)
+        const delta_x = bottleXY.x -fx
+        const delta_y = bottleXY.y -fy
+        const theta_radians = Math.atan2(delta_y, delta_x)
+        const theta_degrees = radToDeg(theta_radians)
+        console.log(`${name} x: ${fx}, y: ${fy} angle:${theta_degrees + 262}`)
+        if (Math.abs(bottleAngle.payload - theta_degrees) < 20) {
+            console.log(`Player ${name} is hit`)
+          sizeFactor *= 2
+        } else {
+          sizeFactor = originalSize
+        }
       })
     }
-
-
-  },[])
+  },[bottleCoordinates, bottleAngle])
 
   return (
     <View style={[styles.container]} ref={(r) => { ref.current._ref = r;} } >

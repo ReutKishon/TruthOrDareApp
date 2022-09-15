@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import {
   StyleSheet,
   Animated,
@@ -7,10 +7,12 @@ import {
 import throttle from "lodash.throttle";
 
 import {useDispatch, useSelector} from "react-redux";
-import {setBottleAngle, setBottleRotation} from "../app/game";
+import {putBottleCoordinates, setBottleAngle, setBottleRotation} from "../app/game";
 
 export default function Bottle({ size = 250 }) {
   const dispatch = useDispatch()
+  const ref = useRef();
+  ref.current = {};
 
   const styles = StyleSheet.create({
     image: {
@@ -20,6 +22,11 @@ export default function Bottle({ size = 250 }) {
   });
 
   useEffect(() => {
+    if (ref.current._ref) {
+      ref.current._ref.measure((width, height, px, py, fx, fy) => {
+        dispatch(putBottleCoordinates({x: fx, y: fy}))
+      })
+    }
     rotationAnimation.addListener(throttle(({ value }) => {
       dispatch(setBottleAngle((value/100)*360))
       dispatch(setBottleRotation(value))
@@ -57,6 +64,7 @@ export default function Bottle({ size = 250 }) {
 
   return (
       <Animated.Image
+          ref={(r) => { ref.current._ref = r;} }
           {...panResponder.panHandlers}
           style={[styles.image, { transform: [{ rotate: rotationInfo }] }]}
         source={require("../assets/beer-bottle2.png")}
