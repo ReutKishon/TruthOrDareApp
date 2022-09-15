@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 function Player({ name, sizeFactor }) {
 
   const originalSize = sizeFactor
+  const [iconSize, setIconSize] = useState(sizeFactor)
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -14,8 +15,8 @@ function Player({ name, sizeFactor }) {
       position: "absolute",
     },
     imageStyle: {
-      height: sizeFactor,
-      width: sizeFactor,
+      height: iconSize,
+      width: iconSize,
     },
     viewTextStyle: {
       position: "absolute",
@@ -41,12 +42,13 @@ function Player({ name, sizeFactor }) {
         const delta_x = bottleXY.x -fx
         const delta_y = bottleXY.y -fy
         const theta_radians = Math.atan2(delta_y, delta_x)
-        const theta_degrees = radToDeg(theta_radians) + 262
+        const theta_degrees = (radToDeg(theta_radians) + 262) % 360
+        console.log(`${name} theta_degrees: ${theta_degrees}, bottleAngle: ${bottleAngle.payload}`)
         if (Math.abs(bottleAngle.payload - theta_degrees) < 30) {
-            console.log(`Player ${name} is hit`)
-          sizeFactor *= 2
+          setIconSize(originalSize*1.1);
+          console.log(`Player ${name} is hit ${sizeFactor}`)
         } else {
-          sizeFactor = originalSize
+          setIconSize(originalSize);
         }
       })
     }
