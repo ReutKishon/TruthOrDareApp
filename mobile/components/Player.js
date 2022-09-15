@@ -38,13 +38,11 @@ function Player({ name, sizeFactor }) {
       console.log(bottleCoordinates)
       const bottleXY = {...bottleCoordinates.payload}
       ref.current._ref.measure((width, height, px, py, fx, fy) => {
-        // console.log(`Calculating angle between bottle and player ${bottleXY.x} ${bottleXY.y} ${fx} ${fy}`)
         const delta_x = bottleXY.x -fx
         const delta_y = bottleXY.y -fy
         const theta_radians = Math.atan2(delta_y, delta_x)
-        const theta_degrees = radToDeg(theta_radians)
-        console.log(`${name} x: ${fx}, y: ${fy} angle:${theta_degrees + 262}`)
-        if (Math.abs(bottleAngle.payload - theta_degrees) < 20) {
+        const theta_degrees = radToDeg(theta_radians) + 262
+        if (Math.abs(bottleAngle.payload - theta_degrees) < 30) {
             console.log(`Player ${name} is hit`)
           sizeFactor *= 2
         } else {

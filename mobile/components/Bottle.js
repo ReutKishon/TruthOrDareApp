@@ -28,7 +28,7 @@ export default function Bottle({ size = 250 }) {
       })
     }
     rotationAnimation.addListener(throttle(({ value }) => {
-      dispatch(setBottleAngle((value/100)*360))
+      dispatch(setBottleAngle(((value%100)/100)*360))
       dispatch(setBottleRotation(value))
     }, 1000))
   }, [])
