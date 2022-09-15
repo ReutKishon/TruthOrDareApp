@@ -15,7 +15,7 @@ export default function Home({ navigation }) {
 
       <TouchableWithoutFeedback
         onPress={() => {
-          navigation.navigate("NewGame");
+          navigation.navigate("Start");
         }}
       >
         <View style={styles.button}>
@@ -24,12 +24,12 @@ export default function Home({ navigation }) {
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
         onPress={() => {
-          navigation.navigate("ExistingGame");
+          navigation.navigate("Join");
         }}
       >
         <View style={styles.button}>
-          <Text style={styles.text} s>
-            Play
+          <Text style={styles.text} >
+            Join
           </Text>
         </View>
       </TouchableWithoutFeedback>

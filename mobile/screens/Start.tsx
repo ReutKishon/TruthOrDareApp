@@ -5,7 +5,6 @@ import {
   TextInput,
   View,
   Text,
-  Picker,
   Modal,
   TouchableHighlight,
 } from "react-native";
@@ -13,7 +12,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Header from "../components/Header";
 import Icon from "react-native-vector-icons/AntDesign";
 
-function NewGame({ navigation }) {
+function Start({ navigation }) {
   const [gameCode, setGameCode] = useState("1236478");
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,38 +47,11 @@ function NewGame({ navigation }) {
         placeholder="Please enter your name"
         maxLength={10}
       />
-      <Text
-        style={[
-          styles.warningText,
-          { display: emptyFieldWarning ? "block" : "none" },
-        ]}
-      >
-        The field is empty!
-      </Text>
-      <form style={{ marginTop: 15, marginBottom: 10 }}>
-        <label>
-          <Text style={{ fontSize: 20 }}>Select number of players</Text>: &ensp;
-          <Picker
-            selectedValue={totalPlayers}
-            style={styles.pickerStyle}
-            onValueChange={(itemValue, itemIndex) => setTotalPlayers(itemValue)}
-          >
-            <Picker.Item label="2" value="2" />
-            <Picker.Item label="3" value="3" />
-            <Picker.Item label="4" value="4" />
-            <Picker.Item label="5" value="5" />
-            <Picker.Item label="6" value="6" />
-            <Picker.Item label="7" value="7" />
-            <Picker.Item label="8" value="8" />
-            <Picker.Item label="9" value="9" />
-            <Picker.Item label="10" value="10" />
-          </Picker>
-        </label>
-      </form>
+
 
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.button, { margin: 12 }]}>
-          <Text style={styles.textButton}>go</Text>
+          <Text style={styles.textButton}>Start</Text>
         </View>
       </TouchableWithoutFeedback>
 
@@ -96,15 +68,11 @@ function NewGame({ navigation }) {
               name="close"
               size={25}
             />
-            <Text style={{ margin: 4 }}>
-              your game code is:{" "}
-              <Text style={{ fontWeight: "bold" }}>{gameCode}</Text>{" "}
-            </Text>
-            <Text>1 / {totalPlayers} are joined</Text>
+            <Text style={{ margin: 4 }}>your game code is:{" "}<Text style={{ fontWeight: "bold" }}>{gameCode}</Text></Text>
             <TouchableHighlight
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate("PlayPage", {
+                navigation.navigate("Main", {
                   numberOfPlayers: totalPlayers,
                 });
               }}
@@ -144,7 +112,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
-    fontWeight: "bold",
   },
   button: {
     padding: 10,
@@ -188,11 +155,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
     backgroundColor: "white",
-    borderRadius: 10,
     height: 30,
     width: 100,
     border: "2px solid black",
   },
 });
 
-export default NewGame;
+export default Start;

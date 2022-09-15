@@ -1,13 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit'
+import {RootState} from "./store";
+
+
+interface Player {
+    name:string
+    id: number
+}
+
+interface GameState {
+    players: Player[],
+    bottleRotation: number,
+    bottleAngle: number,
+    bottleCoordinates?: {x:number, y:number}
+}
+
+const initialState: GameState = {
+    players: [],
+    bottleRotation: 0,
+    bottleAngle: 0,
+    bottleCoordinates: null
+}
 
 export const game = createSlice({
     name: 'game',
-    initialState: {
-        players: [],
-        bottleRotation: 0,
-        bottleAngle: 0,
-        bottleCoordinates: null
-    },
+    initialState,
     reducers: {
         initFakePlayers: state => {
             function generatePlayer() {
@@ -20,18 +36,18 @@ export const game = createSlice({
             state.players = Array.from({length: 6}, () => generatePlayer());
         },
         setBottleRotation: (state, rotation) => {
-            state.bottleRotation = rotation
+            state.bottleRotation = rotation.payload
             console.log(state.bottleRotation)
         },
         setBottleAngle: (state, angle) => {
-            state.bottleAngle = angle
+            state.bottleAngle = angle.payload
             console.log(state.bottleAngle)
         },
         putBottleCoordinates: (state, coordinates) => {
             if (state.bottleCoordinates) {
                 return
             }
-            state.bottleCoordinates = coordinates
+            state.bottleCoordinates = coordinates.payload
             console.log(state.bottleCoordinates)
         }
     }
@@ -39,5 +55,4 @@ export const game = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { initFakePlayers, setBottleRotation, setBottleAngle, putBottleCoordinates } = game.actions
-
 export default game.reducer

@@ -8,10 +8,10 @@ import {
   Modal,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Header from "./Header";
+import Header from "../components/Header";
 import Icon from "react-native-vector-icons/AntDesign";
 
-function NewGame({ navigation }) {
+function NewGame() {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
   const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
@@ -19,7 +19,7 @@ function NewGame({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const onPress = () => {
-    var reg = /^\d+$/;
+    const reg = /^\d+$/;
 
     if (playerName.length === 0 || gameCode.length === 0) {
       setEmptyFieldWarning(true);
@@ -66,46 +66,12 @@ function NewGame({ navigation }) {
         placeholder="Please enter the code game"
         maxLength={10}
       />
-      <Text
-        style={[
-          styles.warningText,
-          { display: syntaxWarning ? "block" : "none" },
-        ]}
-      >
-        Code should only consists with digits!
-      </Text>
-      <Text
-        style={[
-          styles.warningText,
-          { display: emptyFieldWarning ? "block" : "none" },
-        ]}
-      >
-        One of the fields is empty!
-      </Text>
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.button, { margin: 12 }]}>
           <Text style={styles.textButton}>continue</Text>
         </View>
       </TouchableWithoutFeedback>
-      <Modal transparent={true} visible={modalVisible}>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <View style={styles.modalView}>
-            <Icon
-              onPress={() => {
-                setModalVisible(false);
-              }}
-              style={styles.icon}
-              name="close"
-              size={25}
-            />
-            <Text style={{ margin: 4 }}>
-              Waiting for the manager to start the game...
-            </Text>
-          </View>
-        </View>
-      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -145,7 +111,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "black",
-    fontWeight: "bold",
   },
   warningText: {
     color: "red",

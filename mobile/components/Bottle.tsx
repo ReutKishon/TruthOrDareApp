@@ -12,8 +12,7 @@ import {isWeb} from "../utils";
 
 export default function Bottle({ size = 250 }) {
   const dispatch = useDispatch()
-  const ref = useRef();
-  ref.current = {};
+  const bottleImageRef = useRef(null);
 
   const styles = StyleSheet.create({
     image: {
@@ -23,20 +22,22 @@ export default function Bottle({ size = 250 }) {
   });
 
   useEffect(() => {
-    if (ref.current._ref) {
-      setTimeout( () => ref.current._ref.measure((width, height, px, py, fx, fy) => {
+    if (bottleImageRef) {
+      setTimeout( () => bottleImageRef.current.measure((width, height, px, py, fx, fy) => {
         dispatch(putBottleCoordinates({x: fx, y: fy}))
       }),0)
     }
     rotationAnimation.addListener(throttle(({ value }) => {
-      dispatch(setBottleAngle(((value%100)/100)*360))
+      let angle = ((value%100)/100)*360
+      angle = angle < 0 ? 360 + angle : angle
+      dispatch(setBottleAngle(angle))
       dispatch(setBottleRotation(value))
     }, 50))
   }, [])
 
   // Spinner
   const rotationAnimation = new Animated.Value(0);
-  const BOTTLE_SIZE = isWeb()? 400 : 200;
+  const BOTTLE_SIZE = isWeb()? 400 : 150;
 
   let spinning = false
   const panResponder = PanResponder.create({
@@ -60,13 +61,13 @@ export default function Bottle({ size = 250 }) {
   });
 
   const rotationInfo = rotationAnimation.interpolate({
-    inputRange: [0, 100],
-    outputRange: ['0deg', '360deg'],
+    inputRange: [-100, 0, 100],
+    outputRange: ['-360deg', '0deg', '360deg'],
   });
 
   return (
       <Animated.Image
-          ref={(r) => { ref.current._ref = r;} }
+          ref={bottleImageRef}
           {...panResponder.panHandlers}
           style={[styles.image, { transform: [{ rotate: rotationInfo }] }]}
         source={require("../assets/beer-bottle2.png")}

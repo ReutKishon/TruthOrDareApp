@@ -2,17 +2,17 @@ import React, {useEffect, useState} from "react";
 import {Text, View, StyleSheet, Dimensions, Button, Pressable} from "react-native";
 import Player from "../components/Player";
 import Bottle from "../components/Bottle";
-// import Bottle from "../components/SpinnableBottle";
 import {useDispatch, useSelector} from "react-redux";
 import {initFakePlayers} from "../app/game";
 import {degToRad, isWeb} from "../utils";
+import {useAppSelector} from "../app/hooks";
 
 
-function PlayPage() {
+function Main() {
     const dispatch = useDispatch()
     dispatch(initFakePlayers())
 
-    const players = useSelector(state => state.game.players)
+    const players = useAppSelector(state => state.game.players)
 
     let playerComponents = [];
     let angleIncrease = 360 / players.length;
@@ -52,29 +52,6 @@ function PlayPage() {
             </View>
         </View>
     );
-
-
-    function spinPlayers() {
-        let i = 0;
-        const iconSizes = [...playerIconSizes]
-
-        function loop() {
-            setTimeout(() => {
-                const tempIconSize = [...iconSizes]
-                tempIconSize[i] = playerIconSizes[i] * 1.1
-                setPlayerIconSizes(tempIconSize)
-                i++;
-                if (i < players.length) {
-                    loop();
-                }
-            }, 100)
-        }
-
-        loop()
-        setPlayerIconSizes(playerIconSizes)
-    }
-
-
 }
 
 const styles = StyleSheet.create({
@@ -93,4 +70,4 @@ const styles = StyleSheet.create({
         size: isWeb() ? 300 : 150,
     }
 });
-export default PlayPage;
+export default Main;

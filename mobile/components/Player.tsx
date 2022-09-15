@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import {radToDeg} from "../utils";
 import {useSelector} from "react-redux";
+import {useAppSelector} from "../app/hooks";
 
 function Player({ name, sizeFactor }) {
 
@@ -28,24 +29,23 @@ function Player({ name, sizeFactor }) {
     },
   });
 
-  const ref = useRef();
-  ref.current = {};
+  const componentElementRef = useRef(null);
 
-  const bottleCoordinates = useSelector(state => state.game.bottleCoordinates)
-  const bottleAngle = useSelector(state => state.game.bottleAngle)
+  const bottleCoordinates = useAppSelector(state => state.game.bottleCoordinates)
+  const bottleAngle = useAppSelector(state => state.game.bottleAngle)
 
   useEffect(() => {
-    if (ref.current._ref && bottleCoordinates) {
+    if (componentElementRef && bottleCoordinates) {
       console.log(bottleCoordinates)
-      const bottleXY = {...bottleCoordinates.payload}
-      ref.current._ref.measure((width, height, px, py, fx, fy) => {
+      const bottleXY = {...bottleCoordinates}
+      componentElementRef.current.measure((width, height, px, py, fx, fy) => {
         const delta_x = bottleXY.x -fx
         const delta_y = bottleXY.y -fy
         const theta_radians = Math.atan2(delta_y, delta_x)
         const theta_degrees = (radToDeg(theta_radians) + 262) % 360
-        console.log(`${name} theta_degrees: ${theta_degrees}, bottleAngle: ${bottleAngle.payload}`)
-        console.log(`${name} bottleCoordinates: ${JSON.stringify(bottleCoordinates.payload)}`)
-        if (Math.abs(bottleAngle.payload - theta_degrees) < 30) {
+        console.log(`${name} theta_degrees: ${theta_degrees}, bottleAngle: ${bottleAngle}`)
+        console.log(`${name} bottleCoordinates: ${JSON.stringify(bottleCoordinates)}`)
+        if (Math.abs(bottleAngle - theta_degrees) < 30) {
           setIconSize(originalSize*1.1);
           console.log(`Player ${name} is hit ${sizeFactor}`)
         } else {
@@ -56,7 +56,7 @@ function Player({ name, sizeFactor }) {
   },[bottleCoordinates, bottleAngle])
 
   return (
-    <View style={[styles.container]} ref={(r) => { ref.current._ref = r;} } >
+    <View style={[styles.container]} ref={componentElementRef} >
       <Animated.Image
         style={styles.imageStyle}
         source={require("../assets/bottle-cap.png")}
