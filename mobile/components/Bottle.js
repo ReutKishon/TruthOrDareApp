@@ -8,6 +8,7 @@ import throttle from "lodash.throttle";
 
 import {useDispatch, useSelector} from "react-redux";
 import {putBottleCoordinates, setBottleAngle, setBottleRotation} from "../app/game";
+import {isWeb} from "../utils";
 
 export default function Bottle({ size = 250 }) {
   const dispatch = useDispatch()
@@ -23,9 +24,9 @@ export default function Bottle({ size = 250 }) {
 
   useEffect(() => {
     if (ref.current._ref) {
-      ref.current._ref.measure((width, height, px, py, fx, fy) => {
+      setTimeout( () => ref.current._ref.measure((width, height, px, py, fx, fy) => {
         dispatch(putBottleCoordinates({x: fx, y: fy}))
-      })
+      }),0)
     }
     rotationAnimation.addListener(throttle(({ value }) => {
       dispatch(setBottleAngle(((value%100)/100)*360))
@@ -35,13 +36,14 @@ export default function Bottle({ size = 250 }) {
 
   // Spinner
   const rotationAnimation = new Animated.Value(0);
+  const BOTTLE_SIZE = isWeb()? 400 : 200;
 
   let spinning = false
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event, gestureState) => {
       if (gestureState.vy !== 0 && !spinning) {
-        const speedWeight = 2 * (gestureState.x0 < 400 ? -1 : 1);
+        const speedWeight = 2 * (gestureState.x0 < BOTTLE_SIZE ? -1 : 1);
         rotationAnimation.setValue(rotationAnimation._value + (speedWeight * gestureState.vy));
       }
     },

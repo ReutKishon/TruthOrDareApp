@@ -44,6 +44,7 @@ function Player({ name, sizeFactor }) {
         const theta_radians = Math.atan2(delta_y, delta_x)
         const theta_degrees = (radToDeg(theta_radians) + 262) % 360
         console.log(`${name} theta_degrees: ${theta_degrees}, bottleAngle: ${bottleAngle.payload}`)
+        console.log(`${name} bottleCoordinates: ${JSON.stringify(bottleCoordinates.payload)}`)
         if (Math.abs(bottleAngle.payload - theta_degrees) < 30) {
           setIconSize(originalSize*1.1);
           console.log(`Player ${name} is hit ${sizeFactor}`)
