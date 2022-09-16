@@ -13,17 +13,19 @@ function PlayerIcon(props : { sizeFactor: number, info: Player }) {
   const bottleCoordinates = useAppSelector(state => state.game.bottleCoordinates)
   const bottleAngle = useAppSelector(state => state.game.bottleAngle)
 
+  // this logic should sit outside of the component and basically have a view of all players and their positions
+  // and check each player if its angle matches the bottle angle
   useEffect(() => {
     if (componentElementRef && bottleCoordinates) {
-      console.log(bottleCoordinates)
+      // console.log(bottleCoordinates)
       const bottleXY = {...bottleCoordinates}
       componentElementRef.current.measure((width, height, px, py, fx, fy) => {
         const delta_x = bottleXY.x -fx
         const delta_y = bottleXY.y -fy
         const theta_radians = Math.atan2(delta_y, delta_x)
         const theta_degrees = (radToDeg(theta_radians) + 262) % 360
-        console.log(`${player.name} theta_degrees: ${theta_degrees}, bottleAngle: ${bottleAngle}`)
-        console.log(`${player.name} bottleCoordinates: ${JSON.stringify(bottleCoordinates)}`)
+        // console.log(`${player.name} theta_degrees: ${theta_degrees}, bottleAngle: ${bottleAngle}`)
+        // console.log(`${player.name} bottleCoordinates: ${JSON.stringify(bottleCoordinates)}`)
         if (Math.abs(bottleAngle - theta_degrees) < 30) {
           setIconSize(originalSize*1.1);
         } else {

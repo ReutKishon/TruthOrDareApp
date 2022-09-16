@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
   StyleSheet,
   Animated,
@@ -9,14 +9,17 @@ import throttle from "lodash.throttle";
 import {useDispatch, useSelector} from "react-redux";
 import {putBottleCoordinates, setBottleAngle, setBottleRotation} from "../app/game";
 import {isWeb} from "../utils";
+import {useAppSelector} from "../app/hooks";
 const BOTTLE_SIZE = isWeb()? 400 : 150;
 
 function setupSpinabilty(rotationAnimation) {
 
     let spinning = false
-    return PanResponder.create({
+    const [idle, setIdle] = useState(true)
+    const responder =  PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (event, gestureState) => {
+            setIdle(false)
             if (gestureState.vy !== 0 && !spinning) {
                 const speedWeight = 2 * (gestureState.x0 < BOTTLE_SIZE ? -1 : 1);
                 rotationAnimation.setValue((rotationAnimation as any)._value + (speedWeight * gestureState.vy));
@@ -33,6 +36,8 @@ function setupSpinabilty(rotationAnimation) {
             ]).start(() => spinning = false)
         },
     });
+
+    return {responder, idle}
 }
 
 function setupBottleLocator() {
@@ -68,18 +73,45 @@ function buildRotationAnimation() {
 export default function Bottle(props) {
   const bottleRef = setupBottleLocator()
   const {rotationAnimation, rotationInfo} = buildRotationAnimation();
-  const spinResponder = setupSpinabilty(rotationAnimation)
+  const {responder: spinResponder, idle }= setupSpinabilty(rotationAnimation);
+
+
+
+
+  const bottleIdleAnimation = new Animated.Value(1);
+  Animated.loop(
+  Animated.sequence([
+      Animated.spring(bottleIdleAnimation, {
+          toValue: 1.05,
+          speed:10,
+          bounciness: 20,
+          useNativeDriver: true,
+      }),
+      Animated.spring(bottleIdleAnimation, {
+          toValue: 1,
+          bounciness: 0,
+          useNativeDriver: true,
+      })
+  ])).start();
+
+
+  useEffect(() => {
+      if (!idle) {
+          bottleIdleAnimation.stopAnimation()
+      }
+    }, [idle])
+
   return (
       <Animated.Image
           ref={bottleRef}
           {...spinResponder.panHandlers}
-          style={[styles(props).image, { transform: [{ rotate: rotationInfo }] }]}
+          style={[styles(props).image, { transform: [{ rotate: rotationInfo}, {scale: bottleIdleAnimation}] }]}
           source={require("../../assets/beer-bottle2.png")}
       ></Animated.Image>
   );
 }
 
-const styles = ({size =250}) => StyleSheet.create({
+const styles = ({size}) => StyleSheet.create({
   image: {
     height: size,
     width: size,

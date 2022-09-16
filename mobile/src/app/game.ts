@@ -32,18 +32,18 @@ export const game = createSlice({
         },
         setBottleRotation: (state, rotation) => {
             state.bottleRotation = rotation.payload
-            console.log(state.bottleRotation)
+            // console.log(state.bottleRotation)
         },
         setBottleAngle: (state, angle) => {
             state.bottleAngle = angle.payload
-            console.log(state.bottleAngle)
+            // console.log(state.bottleAngle)
         },
         putBottleCoordinates: (state, coordinates) => {
             if (state.bottleCoordinates) {
                 return
             }
             state.bottleCoordinates = coordinates.payload
-            console.log(state.bottleCoordinates)
+            // console.log(state.bottleCoordinates)
         }
     }
 })
