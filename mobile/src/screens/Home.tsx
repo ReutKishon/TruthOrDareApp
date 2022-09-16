@@ -5,34 +5,34 @@ import Header from "../components/Header";
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          top: -100,
-        }}
-      >
+      <View style={{flex: 1}}>
         <Header />
       </View>
 
-      <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.navigate("Start");
-        }}
-      >
-        <View style={styles.button}>
-          <Text style={styles.text}>New game</Text>
+        <View style={{flex: 2}}>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    navigation.navigate("Start");
+                }}
+            >
+                <View style={styles.button}>
+                    <Text style={styles.text}>New game</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    navigation.navigate("Join");
+                }}
+            >
+                <View style={styles.button}>
+                    <Text style={styles.text} >
+                        Join
+                    </Text>
+                </View>
+            </TouchableWithoutFeedback>
         </View>
-      </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          navigation.navigate("Join");
-        }}
-      >
-        <View style={styles.button}>
-          <Text style={styles.text} >
-            Join
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
+
+
     </View>
   );
 }
@@ -42,8 +42,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    top: -50,
-    borderRadius: 10,
   },
   button: {
     alignItems: "center",

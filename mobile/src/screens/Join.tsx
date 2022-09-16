@@ -42,35 +42,34 @@ function NewGame() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          top: -100,
-        }}
-      >
+      <View style={{flex: 1}}>
         <Header />
       </View>
-      <TextInput
-        style={styles.input}
-        onChangeText={(name) => {
-          inputNameHandler(name);
-        }}
-        placeholder="Please enter your name"
-        maxLength={10}
-      />
-      <TextInput
-        style={[styles.input, { margin: 10 }]}
-        keyboardType="numeric"
-        onChangeText={(code) => {
-          inputCodeHandler(code);
-        }}
-        placeholder="Please enter the code game"
-        maxLength={10}
-      />
-      <TouchableWithoutFeedback onPress={onPress}>
-        <View style={[styles.button, { margin: 12 }]}>
-          <Text style={styles.textButton}>continue</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={{flex: 2}}>
+        <TextInput
+            style={styles.input}
+            onChangeText={(name) => {
+              inputNameHandler(name);
+            }}
+            placeholder="Please enter your name"
+            maxLength={10}
+        />
+        <TextInput
+            style={[styles.input, { margin: 10 }]}
+            keyboardType="numeric"
+            onChangeText={(code) => {
+              inputCodeHandler(code);
+            }}
+            placeholder="Please enter the code game"
+            maxLength={10}
+        />
+        <TouchableWithoutFeedback onPress={onPress}>
+          <View style={[styles.button, { margin: 12 }]}>
+            <Text style={styles.textButton}>continue</Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
+
 
     </SafeAreaView>
   );

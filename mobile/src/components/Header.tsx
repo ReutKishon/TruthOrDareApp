@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 60,
-    fontFamily: "Rajdhani-SemiBold",
     marginEnd: 15,
     marginStart: 15,
   },

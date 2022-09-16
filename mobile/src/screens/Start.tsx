@@ -32,57 +32,60 @@ function Start({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          top: -100,
-        }}
-      >
+      <View style={{flex: 1}}>
         <Header />
       </View>
-      <TextInput
-        style={[styles.input, { margin: 10 }]}
-        onChangeText={(name) => {
-          inputNameHandler(name);
-        }}
-        placeholder="Please enter your name"
-        maxLength={10}
-      />
 
 
-      <TouchableWithoutFeedback onPress={onPress}>
-        <View style={[styles.button, { margin: 12 }]}>
-          <Text style={styles.textButton}>Start</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={{flex: 2}}>
+        <TextInput
+            style={[styles.input, { margin: 10 }]}
+            onChangeText={(name) => {
+              inputNameHandler(name);
+            }}
+            placeholder="Please enter your name"
+            maxLength={10}
+        />
 
-      <Modal transparent={true} visible={modalVisible}>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <View style={styles.modalView}>
-            <Icon
-              onPress={() => {
-                setModalVisible(false);
-              }}
-              style={styles.icon}
-              name="close"
-              size={25}
-            />
-            <Text style={{ margin: 4 }}>your game code is:{" "}<Text style={{ fontWeight: "bold" }}>{gameCode}</Text></Text>
-            <TouchableHighlight
-              onPress={() => {
-                setModalVisible(false);
-                navigation.navigate("Main", {
-                  numberOfPlayers: totalPlayers,
-                });
-              }}
-              style={styles.modalButton}
-            >
-              <Text>Start game</Text>
-            </TouchableHighlight>
+
+        <TouchableWithoutFeedback onPress={onPress}>
+          <View style={[styles.button, { margin: 12 }]}>
+            <Text style={styles.textButton}>Start</Text>
           </View>
-        </View>
-      </Modal>
+        </TouchableWithoutFeedback>
+
+        <Modal transparent={true} visible={modalVisible}>
+          <View
+              style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <View style={styles.modalView}>
+              <Icon
+                  onPress={() => {
+                    setModalVisible(false);
+                  }}
+                  style={styles.icon}
+                  name="close"
+                  size={25}
+              />
+              <Text style={{ margin: 4 }}>your game code is:{" "}<Text style={{ fontWeight: "bold" }}>{gameCode}</Text></Text>
+              <TouchableHighlight
+                  onPress={() => {
+                    setModalVisible(false);
+                    navigation.navigate("Main", {
+                      numberOfPlayers: totalPlayers,
+                    });
+                  }}
+                  style={styles.modalButton}
+              >
+                <Text>Start game</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+
+
+      </View>
+
     </SafeAreaView>
   );
 }
