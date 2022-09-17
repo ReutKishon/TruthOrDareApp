@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,7 +9,6 @@ import {
   TouchableHighlight,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Header from "../components/Header";
 import Icon from "react-native-vector-icons/AntDesign";
 
 function Start({ navigation }) {
@@ -19,11 +18,16 @@ function Start({ navigation }) {
   const [totalPlayers, setTotalPlayers] = useState(2);
   const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
 
+  const nameInputRef = useRef(null);
   const onPress = () => {
     if (playerName.length === 0) {
       setEmptyFieldWarning(true);
     } else setModalVisible(true);
   };
+
+  useEffect(() => {
+    nameInputRef.current.focus();
+  })
 
   const inputNameHandler = (name) => {
     if (emptyFieldWarning) setEmptyFieldWarning(false);
@@ -32,13 +36,10 @@ function Start({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex: 1}}>
-        <Header />
-      </View>
-
-
-      <View style={{flex: 2}}>
+      <View style={{ flex: 1 }}></View>
+      <View style={{flex: 2, alignItems: 'center'}}>
         <TextInput
+            ref={nameInputRef}
             style={[styles.input, { margin: 10 }]}
             onChangeText={(name) => {
               inputNameHandler(name);

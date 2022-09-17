@@ -20,10 +20,10 @@ function setupSpinabilty(rotationAnimation) {
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (event, gestureState) => {
             setIdle(false)
-            if (gestureState.vy !== 0 && !spinning) {
-                const speedWeight = 2 * (gestureState.x0 < BOTTLE_SIZE ? -1 : 1);
-                rotationAnimation.setValue((rotationAnimation as any)._value + (speedWeight * gestureState.vy));
-            }
+            // if (gestureState.vy !== 0 && !spinning) {
+            //     const speedWeight = 2 * (gestureState.x0 < BOTTLE_SIZE ? -1 : 1);
+            //     rotationAnimation.setValue((rotationAnimation as any)._value + (speedWeight * gestureState.vy));
+            // }
         },
         onPanResponderRelease: (event, gestureState) => {
             spinning = true
@@ -53,9 +53,9 @@ function setupBottleLocator() {
     return bottleImageRef
 }
 
-function buildRotationAnimation() {
+function setupRotationAnimation() {
     const dispatch = useDispatch()
-    const rotationAnimation = new Animated.Value(0);
+    const rotationAnimation = new Animated.Value(Math.random() * 50);
     const rotationInfo = rotationAnimation.interpolate({
         inputRange: [-100, 0, 100],
         outputRange: ['-360deg', '0deg', '360deg'],
@@ -72,11 +72,8 @@ function buildRotationAnimation() {
 
 export default function Bottle(props) {
   const bottleRef = setupBottleLocator()
-  const {rotationAnimation, rotationInfo} = buildRotationAnimation();
+  const {rotationAnimation, rotationInfo} = setupRotationAnimation();
   const {responder: spinResponder, idle }= setupSpinabilty(rotationAnimation);
-
-
-
 
   const bottleIdleAnimation = new Animated.Value(1);
   Animated.loop(
@@ -106,7 +103,7 @@ export default function Bottle(props) {
           ref={bottleRef}
           {...spinResponder.panHandlers}
           style={[styles(props).image, { transform: [{ rotate: rotationInfo}, {scale: bottleIdleAnimation}] }]}
-          source={require("../../assets/beer-bottle2.png")}
+          source={require("../../assets/bottles/beer.png")}
       ></Animated.Image>
   );
 }

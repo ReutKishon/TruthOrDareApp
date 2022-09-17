@@ -16,14 +16,14 @@ export default function Game() {
     dispatch(initFakePlayers())
 
     return <SafeAreaView style={styles.container}>
-        <NavigationContainer linking={{
+        <NavigationContainer  linking={{
             prefixes: [],
             config: {
                 screens: {
                     Main: 'game',
                 },
             }}}>
-            <GameNavigator.Navigator>
+            <GameNavigator.Navigator screenOptions={{headerShown:false}}>
                 <GameNavigator.Screen name="Home" component={Home} />
                 <GameNavigator.Screen name="Start" component={Start} />
                 <GameNavigator.Screen name="Join" component={ExistingGame} />

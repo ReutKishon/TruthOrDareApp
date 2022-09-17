@@ -8,7 +8,7 @@ export default function Header() {
       <Text style={styles.text}>Truth</Text>
       <Image
         style={styles.image}
-        source={require("../../assets/beer-bottle2.png")}
+        source={require("../../assets/bottles/beer.png")}
       ></Image>
       <Text style={styles.text}>Dare</Text>
     </View>

@@ -42,10 +42,7 @@ function NewGame() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex: 1}}>
-        <Header />
-      </View>
-      <View style={{flex: 2}}>
+      <View style={{ flex: 1 }}></View>
         <TextInput
             style={styles.input}
             onChangeText={(name) => {
@@ -68,9 +65,6 @@ function NewGame() {
             <Text style={styles.textButton}>continue</Text>
           </View>
         </TouchableWithoutFeedback>
-      </View>
-
-
     </SafeAreaView>
   );
 }

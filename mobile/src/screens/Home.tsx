@@ -5,10 +5,7 @@ import Header from "../components/Header";
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <View style={{flex: 1}}>
-        <Header />
-      </View>
-
+        <View style={{ flex: 1 }}></View>
         <View style={{flex: 2}}>
             <TouchableWithoutFeedback
                 onPress={() => {
@@ -39,6 +36,7 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
+      backgroundColor: "white",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
