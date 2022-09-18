@@ -70,33 +70,38 @@ function setupRotationAnimation() {
     return {rotationAnimation, rotationInfo};
 }
 
+const setupIdleAnimation = (idle) => {
+    const bottleIdleAnimation = new Animated.Value(1);
+    Animated.loop(
+        Animated.sequence([
+            Animated.spring(bottleIdleAnimation, {
+                toValue: 1.05,
+                speed:10,
+                bounciness: 20,
+                useNativeDriver: true,
+            }),
+            Animated.spring(bottleIdleAnimation, {
+                toValue: 1,
+                bounciness: 0,
+                useNativeDriver: true,
+            })
+        ])).start();
+
+
+    useEffect(() => {
+        if (!idle) {
+            bottleIdleAnimation.stopAnimation()
+        }
+    }, [idle])
+
+    return bottleIdleAnimation;
+}
+
 export default function Bottle(props) {
   const bottleRef = setupBottleLocator()
   const {rotationAnimation, rotationInfo} = setupRotationAnimation();
   const {responder: spinResponder, idle }= setupSpinabilty(rotationAnimation);
-
-  const bottleIdleAnimation = new Animated.Value(1);
-  Animated.loop(
-  Animated.sequence([
-      Animated.spring(bottleIdleAnimation, {
-          toValue: 1.05,
-          speed:10,
-          bounciness: 20,
-          useNativeDriver: true,
-      }),
-      Animated.spring(bottleIdleAnimation, {
-          toValue: 1,
-          bounciness: 0,
-          useNativeDriver: true,
-      })
-  ])).start();
-
-
-  useEffect(() => {
-      if (!idle) {
-          bottleIdleAnimation.stopAnimation()
-      }
-    }, [idle])
+  const bottleIdleAnimation = setupIdleAnimation(idle);
 
   return (
       <Animated.Image
