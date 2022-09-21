@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,7 +12,7 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 
 function Start({ navigation }) {
-  const [gameCode, setGameCode] = useState("1236478");
+  const [gameCode, setGameCode] = useState(0);
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [totalPlayers, setTotalPlayers] = useState(2);
@@ -27,27 +27,34 @@ function Start({ navigation }) {
 
   useEffect(() => {
     nameInputRef.current.focus();
-  })
+  });
 
   const inputNameHandler = (name) => {
     if (emptyFieldWarning) setEmptyFieldWarning(false);
     setPlayerName(name);
   };
 
+  const startGame = () => {
+    setModalVisible(false);
+
+    navigation.navigate("Main", {
+      numberOfPlayers: totalPlayers,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1 }}></View>
-      <View style={{flex: 2, alignItems: 'center'}}>
+      <View style={{ flex: 2, alignItems: "center" }}>
         <TextInput
-            ref={nameInputRef}
-            style={[styles.input, { margin: 10 }]}
-            onChangeText={(name) => {
-              inputNameHandler(name);
-            }}
-            placeholder="Please enter your name"
-            maxLength={10}
+          ref={nameInputRef}
+          style={[styles.input, { margin: 10 }]}
+          onChangeText={(name) => {
+            inputNameHandler(name);
+          }}
+          placeholder="Please enter your name"
+          maxLength={10}
         />
-
 
         <TouchableWithoutFeedback onPress={onPress}>
           <View style={[styles.button, { margin: 12 }]}>
@@ -57,36 +64,31 @@ function Start({ navigation }) {
 
         <Modal transparent={true} visible={modalVisible}>
           <View
-              style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
             <View style={styles.modalView}>
               <Icon
-                  onPress={() => {
-                    setModalVisible(false);
-                  }}
-                  style={styles.icon}
-                  name="close"
-                  size={25}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+                style={styles.icon}
+                name="close"
+                size={25}
               />
-              <Text style={{ margin: 4 }}>your game code is:{" "}<Text style={{ fontWeight: "bold" }}>{gameCode}</Text></Text>
+              <Text style={{ margin: 4 }}>
+                your game code is:{" "}
+                <Text style={{ fontWeight: "bold" }}>{gameCode}</Text>
+              </Text>
               <TouchableHighlight
-                  onPress={() => {
-                    setModalVisible(false);
-                    navigation.navigate("Main", {
-                      numberOfPlayers: totalPlayers,
-                    });
-                  }}
-                  style={styles.modalButton}
+                onPress={startGame}
+                style={styles.modalButton}
               >
                 <Text>Start game</Text>
               </TouchableHighlight>
             </View>
           </View>
         </Modal>
-
-
       </View>
-
     </SafeAreaView>
   );
 }

@@ -10,6 +10,7 @@ interface GameState {
   askedPlayer: number;
   askedChoice: string;
   askingChoice: string;
+  //code state
 }
 
 const initialState: GameState = {

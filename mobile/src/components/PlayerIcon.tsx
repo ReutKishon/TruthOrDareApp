@@ -46,15 +46,6 @@ function PlayerIcon(props: { sizeFactor: number; info: Player }) {
   }, [bottleCoordinates, bottleAngle]);
 
   return (
-    // <View style={[styles(iconSize).container]} ref={componentElementRef}>
-    //   <Animated.Image
-    //     style={styles(iconSize).imageStyle}
-    //     source={require("../../assets/bottle-cap.png")}
-    //   ></Animated.Image>
-    //   <View style={styles(iconSize).viewTextStyle}>
-    //     <Text style={styles(iconSize).textStyle}>{player.name}</Text>
-    //   </View>
-    // </View>
     <View style={[styles(iconSize).container]} ref={componentElementRef}>
       <Animated.View style={styles(iconSize).circle}></Animated.View>
 
@@ -83,7 +74,7 @@ const styles = (iconSize) =>
       justifyContent: "center",
     },
     textStyle: {
-      fontSize: 30,
+      fontSize: 20,
     },
     circle: {
       justifyContent: "center",
@@ -91,6 +82,7 @@ const styles = (iconSize) =>
       backgroundColor: "orange",
       height: iconSize,
       width: iconSize,
+      opacity: 0.7,
     },
   });
 

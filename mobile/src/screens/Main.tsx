@@ -12,7 +12,7 @@ function Main() {
     let playerComponents = [];
     let angleIncrease = 360 / players.length;
     const playerIconSize = isWeb() ? 200 : 100;
-    const spaceFactor = isWeb() ? 300 : 130;
+    const spaceFactor = isWeb() ? 300 : 140;
 
     for (let i = 0; i < players.length; i++) {
         const angle = degToRad(i * angleIncrease);

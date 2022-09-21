@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {putBottleCoordinates, setBottleAngle, setBottleRotation} from "../app/game";
 import {isWeb} from "../utils";
 import {useAppSelector} from "../app/hooks";
-const BOTTLE_SIZE = isWeb()? 400 : 150;
+const BOTTLE_SIZE = isWeb()? 400 : 300;
 
 function setupSpinabilty(rotationAnimation) {
 
