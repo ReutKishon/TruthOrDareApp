@@ -10,9 +10,12 @@ import {
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
+import axios from "axios";
+
+const URL = "http://localhost:3000";
 
 function Start({ navigation }) {
-  const [gameCode, setGameCode] = useState(0);
+  const [gameCode, setGameCode] = useState(-1);
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [totalPlayers, setTotalPlayers] = useState(2);
@@ -20,9 +23,11 @@ function Start({ navigation }) {
 
   const nameInputRef = useRef(null);
   const onPress = () => {
-    if (playerName.length === 0) {
-      setEmptyFieldWarning(true);
-    } else setModalVisible(true);
+    setModalVisible(false);
+
+    navigation.navigate("Main", {
+      numberOfPlayers: totalPlayers,
+    });
   };
 
   useEffect(() => {
@@ -34,12 +39,24 @@ function Start({ navigation }) {
     setPlayerName(name);
   };
 
-  const startGame = () => {
-    setModalVisible(false);
+  const startGame = async () => {
+    if (playerName.length === 0) {
+      setEmptyFieldWarning(true);
+    } else {
+      try {
+        const resp = await axios.post(URL + "/Start", {
+          name: playerName,
+        });
+        setGameCode(resp.data.data.gameCode);
+        console.log(typeof resp.data.data.gameCode);
 
-    navigation.navigate("Main", {
-      numberOfPlayers: totalPlayers,
-    });
+        console.log(typeof resp.data.data.players.get(0));
+      } catch (error) {
+        console.log(error.response);
+      }
+
+      setModalVisible(true);
+    }
   };
 
   return (
@@ -56,7 +73,7 @@ function Start({ navigation }) {
           maxLength={10}
         />
 
-        <TouchableWithoutFeedback onPress={onPress}>
+        <TouchableWithoutFeedback onPress={startGame}>
           <View style={[styles.button, { margin: 12 }]}>
             <Text style={styles.textButton}>Start</Text>
           </View>
@@ -79,10 +96,7 @@ function Start({ navigation }) {
                 your game code is:{" "}
                 <Text style={{ fontWeight: "bold" }}>{gameCode}</Text>
               </Text>
-              <TouchableHighlight
-                onPress={startGame}
-                style={styles.modalButton}
-              >
+              <TouchableHighlight onPress={onPress} style={styles.modalButton}>
                 <Text>Start game</Text>
               </TouchableHighlight>
             </View>
