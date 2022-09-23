@@ -10,52 +10,40 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Header from "../components/Header";
 import Icon from "react-native-vector-icons/AntDesign";
+import axios from "axios";
+const URL = "http://localhost:3000";
 
-function NewGame() {
+function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
-  const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
-  const [syntaxWarning, setSyntaxWarning] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [gameData, setGameData] = useState("");
 
-  const onPress = () => {
-    const reg = /^\d+$/;
-
-    if (playerName.length === 0 || gameCode.length === 0) {
-      setEmptyFieldWarning(true);
-    } else if (!reg.test(gameCode)) {
-      setSyntaxWarning(true);
-    } else setModalVisible(true);
-  };
-
-  const inputNameHandler = (name) => {
-    if (emptyFieldWarning && gameCode.length != 0) setEmptyFieldWarning(false);
-    setPlayerName(name);
-  };
-
-  const inputCodeHandler = (code) => {
-    if (emptyFieldWarning && playerName.length != 0)
-      setEmptyFieldWarning(false);
-    setSyntaxWarning(false);
-    setGameCode(code);
+  const onPress = async () => {
+    try {
+      const resp = await axios.put(URL + "/Join", {
+        name: playerName,
+      });
+      setGameData(resp.data.data);
+      navigation.navigate("Main", {
+        gameData: gameData,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.input}
-        onChangeText={(name) => {
-          inputNameHandler(name);
-        }}
+        onChangeText={setPlayerName}
         placeholder="Please enter your name"
         maxLength={10}
       />
       <TextInput
         style={[styles.input, { margin: 10 }]}
         keyboardType="numeric"
-        onChangeText={(code) => {
-          inputCodeHandler(code);
-        }}
+        onChangeText={setGameCode}
         placeholder="Please enter the code game"
         maxLength={10}
       />

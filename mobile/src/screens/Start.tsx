@@ -15,18 +15,16 @@ import axios from "axios";
 const URL = "http://localhost:3000";
 
 function Start({ navigation }) {
-  const [gameCode, setGameCode] = useState(-1);
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [totalPlayers, setTotalPlayers] = useState(2);
-  const [emptyFieldWarning, setEmptyFieldWarning] = useState(false);
+  const [gameData, setGameData] = useState(null);
 
   const nameInputRef = useRef(null);
   const onPress = () => {
     setModalVisible(false);
 
     navigation.navigate("Main", {
-      numberOfPlayers: totalPlayers,
+      gameData: gameData,
     });
   };
 
@@ -34,29 +32,17 @@ function Start({ navigation }) {
     nameInputRef.current.focus();
   });
 
-  const inputNameHandler = (name) => {
-    if (emptyFieldWarning) setEmptyFieldWarning(false);
-    setPlayerName(name);
-  };
-
   const startGame = async () => {
-    if (playerName.length === 0) {
-      setEmptyFieldWarning(true);
-    } else {
-      try {
-        const resp = await axios.post(URL + "/Start", {
-          name: playerName,
-        });
-        setGameCode(resp.data.data.gameCode);
-        console.log(typeof resp.data.data.gameCode);
-
-        console.log(typeof resp.data.data.players.get(0));
-      } catch (error) {
-        console.log(error.response);
-      }
-
-      setModalVisible(true);
+    try {
+      const resp = await axios.post(URL + "/Start", {
+        name: playerName,
+      });
+      setGameData(resp.data.data);
+    } catch (error) {
+      console.log(error.response);
     }
+
+    setModalVisible(true);
   };
 
   return (
@@ -66,9 +52,7 @@ function Start({ navigation }) {
         <TextInput
           ref={nameInputRef}
           style={[styles.input, { margin: 10 }]}
-          onChangeText={(name) => {
-            inputNameHandler(name);
-          }}
+          onChangeText={setPlayerName}
           placeholder="Please enter your name"
           maxLength={10}
         />
@@ -94,7 +78,7 @@ function Start({ navigation }) {
               />
               <Text style={{ margin: 4 }}>
                 your game code is:{" "}
-                <Text style={{ fontWeight: "bold" }}>{gameCode}</Text>
+                <Text style={{ fontWeight: "bold" }}>{gameData?.gameCode}</Text>
               </Text>
               <TouchableHighlight onPress={onPress} style={styles.modalButton}>
                 <Text>Start game</Text>

@@ -12,7 +12,6 @@ function PlayerIcon(props: { sizeFactor: number; info: Player }) {
   const { sizeFactor: originalSize, info: player } = props;
   const [iconSize, setIconSize] = useState(props.sizeFactor);
   const componentElementRef = useRef(null);
-
   const bottleCoordinates = useAppSelector(
     (state) => state.game.bottleCoordinates
   );
