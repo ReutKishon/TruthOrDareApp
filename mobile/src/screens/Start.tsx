@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,22 +11,16 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import axios from "axios";
-
+import { useDispatch } from "react-redux";
+import { setPlayers, setCode, setManagerId } from "../app/game";
+import store from "../app/store";
 const URL = "http://localhost:3000";
 
 function Start({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [gameData, setGameData] = useState(null);
-
   const nameInputRef = useRef(null);
-  const onPress = () => {
-    setModalVisible(false);
-
-    navigation.navigate("Main", {
-      gameData: gameData,
-    });
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
     nameInputRef.current.focus();
@@ -37,9 +31,11 @@ function Start({ navigation }) {
       const resp = await axios.post(URL + "/Start", {
         name: playerName,
       });
-      console.log("Start: " + JSON.stringify(resp.data.data));
-
-      setGameData(resp.data.data);
+      // console.log("Start: " + JSON.stringify(resp.data.data));
+      const gameData = resp.data.data;
+      dispatch(setPlayers(gameData.players));
+      dispatch(setCode(gameData.gameCode));
+      dispatch(setManagerId(gameData.managerId));
     } catch (error) {
       console.log(error.response);
     }
@@ -80,9 +76,17 @@ function Start({ navigation }) {
               />
               <Text style={{ margin: 4 }}>
                 your game code is:{" "}
-                <Text style={{ fontWeight: "bold" }}>{gameData?.gameCode}</Text>
+                <Text style={{ fontWeight: "bold" }}>
+                  {store.getState().game.code}
+                </Text>
               </Text>
-              <TouchableHighlight onPress={onPress} style={styles.modalButton}>
+              <TouchableHighlight
+                onPress={() => {
+                  setModalVisible(false);
+                  navigation.navigate("Main");
+                }}
+                style={styles.modalButton}
+              >
                 <Text>Start game</Text>
               </TouchableHighlight>
             </View>

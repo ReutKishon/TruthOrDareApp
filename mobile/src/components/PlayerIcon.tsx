@@ -4,7 +4,7 @@ import { radToDeg } from "../utils";
 import { useAppSelector } from "../app/hooks";
 import { Player } from "../app/models";
 import { useDispatch } from "react-redux";
-import { setAskedPlayer, setAskingPlayer } from "../app/game";
+// import { setAskedPlayer, setAskingPlayer } from "../app/game";
 
 function PlayerIcon(props: { sizeFactor: number; info: Player }) {
   const dispatch = useDispatch();
@@ -32,11 +32,11 @@ function PlayerIcon(props: { sizeFactor: number; info: Player }) {
         // console.log(`${player.name} bottleCoordinates: ${JSON.stringify(bottleCoordinates)}`)
         if (Math.abs(bottleAngle - theta_degrees) < 20) {
           setIconSize(originalSize * 1.1);
-          dispatch(setAskedPlayer(player.id));
+          // dispatch(setAskedPlayer(player.id));
         } else if (Math.abs(((bottleAngle + 180) % 360) - theta_degrees) < 20) {
           setIconSize(originalSize);
 
-          dispatch(setAskingPlayer(player.id));
+          // dispatch(setAskingPlayer(player.id));
         } else {
           setIconSize(originalSize);
         }

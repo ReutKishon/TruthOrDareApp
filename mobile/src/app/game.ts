@@ -2,41 +2,46 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Player } from "./models";
 
 interface GameState {
+  code: number;
   players: Player[];
+  managerId: number;
   bottleRotation: number;
   bottleAngle: number;
   bottleCoordinates?: { x: number; y: number };
-  askingPlayer: number;
-  askedPlayer: number;
-  askedChoice: string;
-  askingChoice: string;
-  //code state
 }
 
 const initialState: GameState = {
+  code: null,
+  managerId: null,
   players: [],
   bottleRotation: 0,
   bottleAngle: 0,
   bottleCoordinates: null,
-  askingPlayer: null,
-  askedPlayer: null,
-  askedChoice: null,
-  askingChoice: null,
 };
 
 export const game = createSlice({
   name: "game",
   initialState,
   reducers: {
-    initFakePlayers: (state) => {
-      function generatePlayer() {
-        const id = Math.floor(Math.random() * 100);
-        return {
-          name: "Player " + id,
-          id,
-        };
-      }
-      state.players = Array.from({ length: 6 }, () => generatePlayer());
+    // initFakePlayers: (state) => {
+    //   function generatePlayer() {
+    //     const id = Math.floor(Math.random() * 100);
+    //     return {
+    //       name: "Player " + id,
+    //       id,
+    //     };
+    //   }
+    //   state.players = Array.from({ length: 6 }, () => generatePlayer());
+    // },
+    setPlayers: (state, players) => {
+      state.players = players.payload;
+      // console.log("players:" + JSON.stringify(state.players));
+    },
+    setCode: (state, code) => {
+      state.code = code.payload;
+    },
+    setManagerId: (state, managerId) => {
+      state.managerId = managerId.payload;
     },
     setBottleRotation: (state, rotation) => {
       state.bottleRotation = rotation.payload;
@@ -53,34 +58,16 @@ export const game = createSlice({
       state.bottleCoordinates = coordinates.payload;
       // console.log(state.bottleCoordinates)
     },
-    setAskingPlayer: (state, playerId) => {
-      state.askingPlayer = playerId.payload;
-      console.log("asking player:" + state.askingPlayer);
-    },
-    setAskedPlayer: (state, playerId) => {
-      state.askedPlayer = playerId.payload;
-      console.log("asked player:" + state.askedPlayer);
-    },
-    setAskedChoice: (state, choice) => {
-      state.askedChoice = choice.payload;
-      // console.log(state.askedChoice);
-    },
-    setAskingChoice: (state, choice) => {
-      state.askingChoice = choice.payload;
-      // console.log(state.askingChoice);
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
 export const {
-  initFakePlayers,
+  setCode,
+  setPlayers,
+  setManagerId,
   setBottleRotation,
   setBottleAngle,
   putBottleCoordinates,
-  setAskedPlayer,
-  setAskingPlayer,
-  setAskedChoice,
-  setAskingChoice,
 } = game.actions;
 export default game.reducer;

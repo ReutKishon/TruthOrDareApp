@@ -8,24 +8,27 @@ import {
   Modal,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Header from "../components/Header";
-import Icon from "react-native-vector-icons/AntDesign";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setPlayers, setCode, setManagerId } from "../app/game";
 const URL = "http://localhost:3000";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
+  const dispatch = useDispatch();
 
   const onPress = async () => {
     try {
       const resp = await axios.put(URL + "/Join/" + gameCode, {
         name: playerName,
       });
-      console.log("Join: " + JSON.stringify(resp.data.data));
-      navigation.navigate("Main", {
-        gameData: resp.data.data,
-      });
+      // console.log("Join: " + JSON.stringify(resp.data.data));
+      dispatch(setPlayers(resp.data.data.players));
+      dispatch(setCode(resp.data.data.gameCode));
+      dispatch(setManagerId(resp.data.data.managerId));
+
+      navigation.navigate("Main");
     } catch (error) {
       console.log(error.response);
     }

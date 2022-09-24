@@ -1,16 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import PlayerIcon from "../components/PlayerIcon";
 import Bottle from "../components/Bottle";
 import { degToRad, isWeb } from "../utils";
 import { useAppSelector } from "../app/hooks";
 
-function Main({ route }) {
-  console.log("Main:" + route.params.gameData);
-  const gameData = route.params.gameData;
+function Main() {
+  const players = useAppSelector((state) => state.game.players);
 
-  // const players = useAppSelector((state) => state.game.players);
-  const players = gameData.players || {};
   let playerComponents = [];
   let angleIncrease = 360 / Object.keys(players).length;
   const playerIconSize = isWeb() ? 200 : 100;
