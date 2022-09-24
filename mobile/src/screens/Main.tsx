@@ -6,7 +6,7 @@ import { degToRad, isWeb } from "../utils";
 import { useAppSelector } from "../app/hooks";
 
 function Main({ route }) {
-  console.log(route.params.gameData);
+  console.log("Main:" + route.params.gameData);
   const gameData = route.params.gameData;
 
   // const players = useAppSelector((state) => state.game.players);

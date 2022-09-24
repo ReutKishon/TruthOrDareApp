@@ -37,6 +37,8 @@ function Start({ navigation }) {
       const resp = await axios.post(URL + "/Start", {
         name: playerName,
       });
+      console.log("Start: " + JSON.stringify(resp.data.data));
+
       setGameData(resp.data.data);
     } catch (error) {
       console.log(error.response);

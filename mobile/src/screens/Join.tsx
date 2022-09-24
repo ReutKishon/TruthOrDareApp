@@ -16,16 +16,15 @@ const URL = "http://localhost:3000";
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
-  const [gameData, setGameData] = useState("");
 
   const onPress = async () => {
     try {
-      const resp = await axios.put(URL + "/Join", {
+      const resp = await axios.put(URL + "/Join/" + gameCode, {
         name: playerName,
       });
-      setGameData(resp.data.data);
+      console.log("Join: " + JSON.stringify(resp.data.data));
       navigation.navigate("Main", {
-        gameData: gameData,
+        gameData: resp.data.data,
       });
     } catch (error) {
       console.log(error.response);
