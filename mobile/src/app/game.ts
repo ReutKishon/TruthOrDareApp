@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Player } from "./models";
+import { Player } from "../../../server/source/controllers/games";
 
 interface GameState {
   code: number;
-  players: Player[];
+  players: { [key: number]: Player };
   managerId: number;
   bottleRotation: number;
   bottleAngle: number;
@@ -13,7 +13,7 @@ interface GameState {
 const initialState: GameState = {
   code: null,
   managerId: null,
-  players: [],
+  players: {},
   bottleRotation: 0,
   bottleAngle: 0,
   bottleCoordinates: null,

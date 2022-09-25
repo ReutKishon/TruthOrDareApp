@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import PlayerIcon from "../components/PlayerIcon";
 import Bottle from "../components/Bottle";
 import { degToRad, isWeb } from "../utils";
 import { useAppSelector } from "../app/hooks";
+import { connect, shallowEqual } from "react-redux";
+import { Player } from "../../../server/source/controllers/games";
 
 function Main() {
-  const players = useAppSelector((state) => state.game.players);
+  console.log("Component rendered");
+  let players = useAppSelector((state) => state.game.players);
 
+  console.log(JSON.stringify(players));
   let playerComponents = [];
+
   let angleIncrease = 360 / Object.keys(players).length;
-  const playerIconSize = isWeb() ? 200 : 100;
-  const spaceFactor = isWeb() ? 300 : 140;
+  const playerIconSize = isWeb() ? 200 : 80;
+  const spaceFactor = isWeb() ? 300 : 120;
 
   for (let i = 0; i < Object.keys(players).length; i++) {
     const angle = degToRad(i * angleIncrease);
@@ -51,5 +56,12 @@ const styles = StyleSheet.create({
     size: isWeb() ? 300 : 150,
   },
 });
-
-export default Main;
+function mapStateToProps(
+  state: { players: { [key: number]: Player } },
+  ownProps: any
+) {
+  return {
+    players: state.players,
+  };
+}
+export default connect(mapStateToProps)(Main);
