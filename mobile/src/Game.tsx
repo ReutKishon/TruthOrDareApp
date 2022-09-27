@@ -17,7 +17,7 @@ export default function Game() {
           prefixes: [],
           config: {
             screens: {
-              Main: "game",
+              Home: "game",
             },
           },
         }}

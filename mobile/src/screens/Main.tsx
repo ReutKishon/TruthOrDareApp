@@ -4,13 +4,11 @@ import PlayerIcon from "../components/PlayerIcon";
 import Bottle from "../components/Bottle";
 import { degToRad, isWeb } from "../utils";
 import { useAppSelector } from "../app/hooks";
-import { connect, shallowEqual } from "react-redux";
 import { Player } from "../../../server/source/controllers/games";
-
+import { areObjectsEqual } from "../utils";
 function Main() {
   console.log("Component rendered");
-  let players = useAppSelector((state) => state.game.players);
-
+  let players = useAppSelector((state) => state.game.players, areObjectsEqual);
   console.log(JSON.stringify(players));
   let playerComponents = [];
 
@@ -32,6 +30,7 @@ function Main() {
 
   return (
     <View style={styles.container}>
+      <Text>{Object.keys(players).length}</Text>
       <View style={styles.playersCircle}>{playerComponents}</View>
       <View style={styles.bottle}>
         <Bottle size={styles.bottle.size} />
@@ -64,4 +63,4 @@ function mapStateToProps(
     players: state.players,
   };
 }
-export default connect(mapStateToProps)(Main);
+export default Main;

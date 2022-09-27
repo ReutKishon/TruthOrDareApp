@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import { radToDeg } from "../utils";
-import { useAppSelector } from "../app/hooks";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { Player } from "../app/models";
-import { useDispatch } from "react-redux";
 // import { setAskedPlayer, setAskingPlayer } from "../app/game";
 
 function PlayerIcon(props: { sizeFactor: number; info: Player }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { sizeFactor: originalSize, info: player } = props;
   const [iconSize, setIconSize] = useState(props.sizeFactor);

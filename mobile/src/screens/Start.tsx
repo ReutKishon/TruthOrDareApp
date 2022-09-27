@@ -11,16 +11,16 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { setPlayers, setCode, setManagerId } from "../app/game";
-import store from "../app/store";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+
 const URL = "http://localhost:3000";
 
 function Start({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const nameInputRef = useRef(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     nameInputRef.current.focus();
@@ -77,7 +77,7 @@ function Start({ navigation }) {
               <Text style={{ margin: 4 }}>
                 your game code is:{" "}
                 <Text style={{ fontWeight: "bold" }}>
-                  {store.getState().game.code}
+                  {useAppSelector((state) => state.game.code)}
                 </Text>
               </Text>
               <TouchableHighlight

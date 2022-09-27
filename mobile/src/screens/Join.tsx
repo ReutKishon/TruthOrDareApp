@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,15 +9,20 @@ import {
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+
 import { setPlayers, setCode, setManagerId } from "../app/game";
 const URL = "http://localhost:3000";
 
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
-  const dispatch = useDispatch();
+  const nameInputRef = useRef(null);
+  const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    nameInputRef.current.focus();
+  });
   const onPress = async () => {
     try {
       const resp = await axios.put(URL + "/Join/" + gameCode, {
@@ -37,6 +42,7 @@ function NewGame({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
+        ref={nameInputRef}
         style={styles.input}
         onChangeText={setPlayerName}
         placeholder="Please enter your name"

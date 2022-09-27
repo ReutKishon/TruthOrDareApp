@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Player } from "../../../server/source/controllers/games";
+import _ from "lodash";
 
 interface GameState {
   code: number;
@@ -23,18 +24,11 @@ export const game = createSlice({
   name: "game",
   initialState,
   reducers: {
-    // initFakePlayers: (state) => {
-    //   function generatePlayer() {
-    //     const id = Math.floor(Math.random() * 100);
-    //     return {
-    //       name: "Player " + id,
-    //       id,
-    //     };
-    //   }
-    //   state.players = Array.from({ length: 6 }, () => generatePlayer());
-    // },
     setPlayers: (state, players) => {
-      state.players = players.payload;
+      state.players = _.cloneDeep(players.payload);
+
+      // state.players = { ...players.payload };
+
       // console.log("players:" + JSON.stringify(state.players));
     },
     setCode: (state, code) => {

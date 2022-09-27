@@ -10,3 +10,7 @@ export function isWeb() {
   const windowHeight = Dimensions.get("window").height;
   return windowHeight / windowWidth < 1;
 }
+
+export function areObjectsEqual<T>(left: object, right: object): boolean {
+  return Object.keys(left).length === Object.keys(right).length;
+}
