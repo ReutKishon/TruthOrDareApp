@@ -11,15 +11,15 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import axios from "axios";
-import { setPlayers, setCode, setManagerId } from "../app/game";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-
+import {useAppDispatch, useAppSelector} from "../app/hooks";
+import {setGame} from "../app/game";
 const URL = "http://localhost:3000";
 
 function Start({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const nameInputRef = useRef(null);
+  const game = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,14 +28,12 @@ function Start({ navigation }) {
 
   const startGame = async () => {
     try {
-      const resp = await axios.post(URL + "/Start", {
+      const {data} = await axios.post(URL + "/Start", {
         name: playerName,
       });
-      // console.log("Start: " + JSON.stringify(resp.data.data));
-      const gameData = resp.data.data;
-      dispatch(setPlayers(gameData.players));
-      dispatch(setCode(gameData.gameCode));
-      dispatch(setManagerId(gameData.managerId));
+      const game = data.game;
+      console.log("Start: " + JSON.stringify(game));
+      dispatch(setGame(game));
     } catch (error) {
       console.log(error.response);
     }
@@ -77,7 +75,7 @@ function Start({ navigation }) {
               <Text style={{ margin: 4 }}>
                 your game code is:{" "}
                 <Text style={{ fontWeight: "bold" }}>
-                  {useAppSelector((state) => state.game.code)}
+                  {game.code}
                 </Text>
               </Text>
               <TouchableHighlight

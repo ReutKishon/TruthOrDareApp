@@ -24,44 +24,27 @@ export const game = createSlice({
   name: "game",
   initialState,
   reducers: {
-    setPlayers: (state, players) => {
-      state.players = _.cloneDeep(players.payload);
-
-      // state.players = { ...players.payload };
-
-      // console.log("players:" + JSON.stringify(state.players));
-    },
-    setCode: (state, code) => {
-      state.code = code.payload;
-    },
-    setManagerId: (state, managerId) => {
-      state.managerId = managerId.payload;
+    setGame: (state, {payload: game}) => {
+      state.code = game.code;
+      state.players = game.players;
     },
     setBottleRotation: (state, rotation) => {
       state.bottleRotation = rotation.payload;
-      // console.log(state.bottleRotation)
     },
     setBottleAngle: (state, angle) => {
       state.bottleAngle = angle.payload;
-      // console.log(state.bottleAngle)
     },
-    putBottleCoordinates: (state, coordinates) => {
-      if (state.bottleCoordinates) {
-        return;
-      }
-      state.bottleCoordinates = coordinates.payload;
-      // console.log(state.bottleCoordinates)
-    },
+    setBottleCoordinates: (state, coordinates) => {
+        state.bottleCoordinates = coordinates.payload;
+    }
   },
 });
 
 // Action creators are generated for each case reducer function
 export const {
-  setCode,
-  setPlayers,
-  setManagerId,
+  setGame,
   setBottleRotation,
   setBottleAngle,
-  putBottleCoordinates,
+    setBottleCoordinates
 } = game.actions;
 export default game.reducer;

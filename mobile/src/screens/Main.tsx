@@ -1,32 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import PlayerIcon from "../components/PlayerIcon";
 import Bottle from "../components/Bottle";
 import { degToRad, isWeb } from "../utils";
 import { useAppSelector } from "../app/hooks";
-import { Player } from "../../../server/source/controllers/games";
 import { areObjectsEqual } from "../utils";
 function Main() {
-  console.log("Component rendered");
-  let players = useAppSelector((state) => state.game.players, areObjectsEqual);
-  console.log(JSON.stringify(players));
-  let playerComponents = [];
+  let game = useAppSelector((state) => state.game);
+  const players = game.players;
 
   let angleIncrease = 360 / Object.keys(players).length;
   const playerIconSize = isWeb() ? 200 : 80;
   const spaceFactor = isWeb() ? 300 : 120;
 
-  for (let i = 0; i < Object.keys(players).length; i++) {
-    const angle = degToRad(i * angleIncrease);
+  const playerComponents = Object.keys(players).map((playerId, index) => {
+    const angle = degToRad(index * angleIncrease);
     const x = Math.cos(angle) * spaceFactor;
     const y = Math.sin(angle) * spaceFactor;
 
-    playerComponents.push(
-      <View style={{ top: y, left: x }} key={i}>
-        <PlayerIcon info={players[i]} sizeFactor={playerIconSize}></PlayerIcon>
-      </View>
-    );
-  }
+    return <View style={{ top: y, left: x }} key={index}>
+      <PlayerIcon info={players[playerId]} sizeFactor={playerIconSize}></PlayerIcon>
+    </View>
+  });
+
 
   return (
     <View style={styles.container}>
@@ -55,12 +51,12 @@ const styles = StyleSheet.create({
     size: isWeb() ? 300 : 150,
   },
 });
-function mapStateToProps(
-  state: { players: { [key: number]: Player } },
-  ownProps: any
-) {
-  return {
-    players: state.players,
-  };
-}
+// function mapStateToProps(
+//   state: { players: { [key: number]: Player } },
+//   ownProps: any
+// ) {
+//   return {
+//     players: state.players,
+//   };
+// }
 export default Main;

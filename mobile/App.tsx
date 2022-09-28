@@ -7,6 +7,7 @@ import Game from "./src/Game";
 const App = () => {
   return (
     <Provider store={store}>
+
       <Game />
     </Provider>
   );

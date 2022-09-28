@@ -4,7 +4,7 @@ import throttle from "lodash.throttle";
 
 import { useAppDispatch } from "../app/hooks";
 import {
-  putBottleCoordinates,
+  setBottleCoordinates,
   setBottleAngle,
   setBottleRotation,
 } from "../app/game";
@@ -46,7 +46,7 @@ function setupBottleLocator() {
       setTimeout(
         () =>
           bottleImageRef.current.measure((width, height, px, py, fx, fy) => {
-            dispatch(putBottleCoordinates({ x: fx, y: fy }));
+            dispatch(setBottleCoordinates({ x: fx, y: fy }));
           }),
         0
       );

@@ -10,8 +10,8 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
+import {setGame, setNewGame} from "../app/game";
 
-import { setPlayers, setCode, setManagerId } from "../app/game";
 const URL = "http://localhost:3000";
 
 function NewGame({ navigation }) {
@@ -25,13 +25,13 @@ function NewGame({ navigation }) {
   });
   const onPress = async () => {
     try {
-      const resp = await axios.put(URL + "/Join/" + gameCode, {
+      const {data} = await axios.put(URL + "/Join/" + gameCode, {
         name: playerName,
       });
-      // console.log("Join: " + JSON.stringify(resp.data.data));
-      dispatch(setPlayers(resp.data.data.players));
-      dispatch(setCode(resp.data.data.gameCode));
-      dispatch(setManagerId(resp.data.data.managerId));
+
+      console.log(data)
+
+      dispatch(setGame(data.game));
 
       navigation.navigate("Main");
     } catch (error) {
