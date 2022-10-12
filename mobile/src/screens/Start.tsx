@@ -11,8 +11,11 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
 import axios from "axios";
-import {useAppDispatch, useAppSelector} from "../app/hooks";
-import {setGame} from "../app/game";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { setGame } from "../app/game";
+import NextButton from "../shared/button";
+import { divide } from "lodash";
+
 const URL = "http://localhost:3000";
 
 function Start({ navigation }) {
@@ -28,12 +31,10 @@ function Start({ navigation }) {
 
   const startGame = async () => {
     try {
-      const {data} = await axios.post(URL + "/Start", {
+      const { data } = await axios.post(URL + "/Start", {
         name: playerName,
       });
-      const game = data.game;
-      console.log("Start: " + JSON.stringify(game));
-      dispatch(setGame(game));
+      dispatch(setGame(data.game));
     } catch (error) {
       console.log(error.response);
     }
@@ -53,11 +54,13 @@ function Start({ navigation }) {
           maxLength={10}
         />
 
-        <TouchableWithoutFeedback onPress={startGame}>
-          <View style={[styles.button, { margin: 12 }]}>
-            <Text style={styles.textButton}>Start</Text>
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={{ padding: 20 }}>
+          <NextButton
+            text="start"
+            size={{ width: 150, height: 50 }}
+            onPress={startGame}
+          />
+        </View>
 
         <Modal transparent={true} visible={modalVisible}>
           <View
@@ -74,9 +77,7 @@ function Start({ navigation }) {
               />
               <Text style={{ margin: 4 }}>
                 your game code is:{" "}
-                <Text style={{ fontWeight: "bold" }}>
-                  {game.code}
-                </Text>
+                <Text style={{ fontWeight: "bold" }}>{game.code}</Text>
               </Text>
               <TouchableHighlight
                 onPress={() => {
@@ -110,27 +111,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#e0ffff",
     height: 50,
-    width: 300,
+    width: 280,
     border: "2px solid black",
   },
 
-  textButton: {
-    fontSize: 18,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "black",
-  },
-  button: {
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-    backgroundColor: "#e0ffff",
-    height: 50,
-    width: 150,
-    border: "2px solid black",
-  },
   pickerStyle: {
     height: 30,
     width: 50,
@@ -146,12 +130,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#e0ffff",
     borderRadius: 20,
     borderWidth: 2,
-    width: 400,
-    height: 180,
+    width: 280,
+    height: 100,
   },
   icon: {
-    marginTop: -135,
-    marginLeft: 4,
+    marginTop: -65,
     position: "absolute",
     color: "black",
     left: 5,

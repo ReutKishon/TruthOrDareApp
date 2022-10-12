@@ -1,42 +1,37 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
-import Header from "../components/Header";
-
+import NextButton from "../shared/button";
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-        <View style={{ flex: 1 }}></View>
-        <View style={{flex: 2}}>
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    navigation.navigate("Start");
-                }}
-            >
-                <View style={styles.button}>
-                    <Text style={styles.text}>New game</Text>
-                </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    navigation.navigate("Join");
-                }}
-            >
-                <View style={styles.button}>
-                    <Text style={styles.text} >
-                        Join
-                    </Text>
-                </View>
-            </TouchableWithoutFeedback>
+      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 2 }}>
+        <View style={{ margin: 6 }}>
+          <NextButton
+            text="New game"
+            size={{ width: 200, height: 50 }}
+            onPress={() => {
+              navigation.navigate("Start");
+            }}
+          />
         </View>
-
-
+        <View style={{ margin: 6 }}>
+          <NextButton
+            text="Join game"
+            size={{ width: 200, height: 50 }}
+            onPress={() => {
+              navigation.navigate("Join");
+            }}
+          />
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-      backgroundColor: "white",
+    backgroundColor: "white",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",

@@ -24,7 +24,7 @@ export const game = createSlice({
   name: "game",
   initialState,
   reducers: {
-    setGame: (state, {payload: game}) => {
+    setGame: (state, { payload: game }) => {
       state.code = game.code;
       state.players = game.players;
     },
@@ -35,8 +35,8 @@ export const game = createSlice({
       state.bottleAngle = angle.payload;
     },
     setBottleCoordinates: (state, coordinates) => {
-        state.bottleCoordinates = coordinates.payload;
-    }
+      state.bottleCoordinates = coordinates.payload;
+    },
   },
 });
 
@@ -45,6 +45,6 @@ export const {
   setGame,
   setBottleRotation,
   setBottleAngle,
-    setBottleCoordinates
+  setBottleCoordinates,
 } = game.actions;
 export default game.reducer;

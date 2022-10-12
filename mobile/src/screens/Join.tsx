@@ -1,19 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  View,
-  Text,
-  Modal,
-} from "react-native";
+import { SafeAreaView, StyleSheet, TextInput, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import {setGame, setNewGame} from "../app/game";
-
-const URL = "http://localhost:3000";
-
+import { setGame } from "../app/game";
+import { socket, URL } from "../socket";
+import NextButton from "../shared/button";
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
@@ -23,15 +15,14 @@ function NewGame({ navigation }) {
   useEffect(() => {
     nameInputRef.current.focus();
   });
+
   const onPress = async () => {
     try {
-      const {data} = await axios.put(URL + "/Join/" + gameCode, {
+      const { data } = await axios.put(URL + "/Join/" + gameCode, {
         name: playerName,
       });
-
-      console.log(data)
-
-      dispatch(setGame(data.game));
+      console.log(data);
+      socket.emit("updateGame", data.game);
 
       navigation.navigate("Main");
     } catch (error) {
@@ -55,11 +46,13 @@ function NewGame({ navigation }) {
         placeholder="Please enter the code game"
         maxLength={10}
       />
-      <TouchableWithoutFeedback onPress={onPress}>
-        <View style={[styles.button, { margin: 12 }]}>
-          <Text style={styles.textButton}>continue</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <View style={{ margin: 12 }}>
+        <NextButton
+          text="start"
+          size={{ width: 150, height: 50 }}
+          onPress={onPress}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -69,8 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    // top: 10,
-    // borderRadius: 10,
   },
   input: {
     padding: 10,
@@ -82,24 +73,7 @@ const styles = StyleSheet.create({
     width: 300,
     border: "2px solid black",
   },
-  button: {
-    padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-    backgroundColor: "#e0ffff",
-    height: 50,
-    width: 150,
-    border: "2px solid black",
-  },
 
-  textButton: {
-    fontSize: 18,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "black",
-  },
   warningText: {
     color: "red",
     fontSize: 12,

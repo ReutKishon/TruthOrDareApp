@@ -13,7 +13,7 @@ export default function Game() {
     const game = useAppSelector(state => state.game)
   return (
     <SafeAreaView style={styles.container}>
-        <Text>{JSON.stringify(game, null, 4)}</Text>
+        {/* <Text>{JSON.stringify(game, null, 4)}</Text> */}
       <NavigationContainer
         linking={{
           prefixes: [],
