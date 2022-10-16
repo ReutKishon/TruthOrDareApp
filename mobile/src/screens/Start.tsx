@@ -57,7 +57,7 @@ function Start({ navigation }) {
         <View style={{ padding: 20 }}>
           <NextButton
             text="start"
-            size={{ width: 150, height: 50 }}
+            size={{ width: 250, height: 50 }}
             onPress={startGame}
           />
         </View>
@@ -111,19 +111,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#e0ffff",
     height: 50,
-    width: 280,
+    width: 250,
     border: "2px solid black",
   },
 
-  pickerStyle: {
-    height: 30,
-    width: 50,
-    borderRadius: 6,
-  },
-  warningText: {
-    color: "red",
-    fontSize: 12,
-  },
+
+
   modalView: {
     justifyContent: "center",
     alignItems: "center",

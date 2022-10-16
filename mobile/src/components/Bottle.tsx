@@ -11,7 +11,7 @@ import {
 import { isWeb } from "../utils";
 const BOTTLE_SIZE = isWeb() ? 400 : 250;
 
-function setupSpinabilty(rotationAnimation) {
+function setupSpinabilty(rotationAnimation: Animated.Value | Animated.ValueXY) {
   let spinning = false;
   const [idle, setIdle] = useState(true);
   const responder = PanResponder.create({

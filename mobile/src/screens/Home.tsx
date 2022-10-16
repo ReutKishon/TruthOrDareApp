@@ -1,15 +1,29 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  Dimensions,
+} from "react-native";
+import Header from "../components/Header";
+import QuestionMark from "../components/Questionmark";
 import NextButton from "../shared/button";
+const dimensions = Dimensions.get("window");
+
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={{ flex: 1 }}></View>
       <View style={{ flex: 2 }}>
+        <Header top={-60} />
+        {new Array(100).fill(true).map((_, i) => (
+          <QuestionMark key={i} scene={dimensions} />
+        ))}
         <View style={{ margin: 6 }}>
           <NextButton
             text="New game"
-            size={{ width: 200, height: 50 }}
+            size={{ width: 250, height: 50 }}
             onPress={() => {
               navigation.navigate("Start");
             }}
@@ -18,7 +32,7 @@ export default function Home({ navigation }) {
         <View style={{ margin: 6 }}>
           <NextButton
             text="Join game"
-            size={{ width: 200, height: 50 }}
+            size={{ width: 250, height: 50 }}
             onPress={() => {
               navigation.navigate("Join");
             }}
@@ -36,16 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 10,
-    margin: 6,
-    backgroundColor: "#e0ffff",
-    height: 50,
-    width: 200,
-    border: "2px solid black",
-  },
+
   text: {
     fontSize: 16,
     lineHeight: 21,

@@ -49,7 +49,7 @@ function NewGame({ navigation }) {
       <View style={{ margin: 12 }}>
         <NextButton
           text="start"
-          size={{ width: 150, height: 50 }}
+          size={{ width: 250, height: 50 }}
           onPress={onPress}
         />
       </View>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#e0ffff",
     height: 50,
-    width: 300,
+    width: 250,
     border: "2px solid black",
   },
 

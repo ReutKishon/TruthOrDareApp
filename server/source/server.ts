@@ -6,7 +6,6 @@ import cors from "cors";
 import { Server } from "socket.io";
 import addPlayer from "../source/controllers/games";
 import addGame from "../source/controllers/games";
-
 const router: Express = express();
 
 router.use(express.json());
@@ -32,6 +31,7 @@ io.on("connection", (socket) => {
     io.sockets.emit("updatedGame", data);
   });
 });
+
 
 const PORT: any = process.env.PORT ?? 3000;
 httpServer.listen(PORT, () =>

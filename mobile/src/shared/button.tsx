@@ -1,17 +1,38 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  Easing,
+} from "react-native";
 import LinearGradient from "../../node_modules/react-native-linear-gradient/common";
 
 export default function NextButton({ text, size, onPress }) {
+  const animatedValue = new Animated.Value(0);
+  const onPressIn = () => {
+    animatedValue.setValue(0);
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 100,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  };
+  const buttonScale = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.2],
+  });
   return (
-    // <LinearGradient colors={["#4c669f", "#3b5998", "#192f6a"]}>
     <TouchableOpacity
       style={[styles.buttonStyle, { width: size.width, height: size.height }]}
       onPress={onPress}
     >
-      <Text style={styles.textStyle}>{text}</Text>
+      <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+        <Text style={styles.textStyle}>{text}</Text>
+      </Animated.View>
     </TouchableOpacity>
-    // </LinearGradient>
   );
 }
 
