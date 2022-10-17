@@ -7,6 +7,7 @@ import {
   Text,
   Modal,
   TouchableHighlight,
+  Dimensions,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -14,7 +15,8 @@ import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setGame } from "../app/game";
 import NextButton from "../shared/button";
-import { divide } from "lodash";
+import QuestionMark from "../components/Questionmark";
+const dimensions = Dimensions.get("window");
 
 const URL = "http://localhost:3000";
 
@@ -43,8 +45,12 @@ function Start({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={{ flex: 1 }}></View>
+
+      {new Array(100).fill(true).map((_, i) => (
+        <QuestionMark key={i} scene={dimensions} />
+      ))}
       <View style={{ flex: 2, alignItems: "center" }}>
         <TextInput
           ref={nameInputRef}
@@ -61,66 +67,61 @@ function Start({ navigation }) {
             onPress={startGame}
           />
         </View>
-
-        <Modal transparent={true} visible={modalVisible}>
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
-            <View style={styles.modalView}>
-              <Icon
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-                style={styles.icon}
-                name="close"
-                size={25}
-              />
-              <Text style={{ margin: 4 }}>
-                your game code is:{" "}
-                <Text style={{ fontWeight: "bold" }}>{game.code}</Text>
-              </Text>
-              <TouchableHighlight
-                onPress={() => {
-                  setModalVisible(false);
-                  navigation.navigate("Main");
-                }}
-                style={styles.modalButton}
-              >
-                <Text>Start game</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
       </View>
-    </SafeAreaView>
+
+      <Modal transparent={true} visible={modalVisible}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={styles.modalView}>
+            <Icon
+              onPress={() => {
+                setModalVisible(false);
+              }}
+              style={styles.icon}
+              name="close"
+              size={25}
+            />
+            <Text style={{ margin: 4 }}>
+              your game code is:{" "}
+              <Text style={{ fontWeight: "bold" }}>{game.code}</Text>
+            </Text>
+            <TouchableHighlight
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate("Main");
+              }}
+              style={styles.modalButton}
+            >
+              <Text style={{ fontWeight: "bold", color: "white" }}>
+                Start game
+              </Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    top: 10,
-    borderRadius: 10,
   },
   input: {
     padding: 10,
-    alignItems: "center",
-    justifyContent: "center",
     borderRadius: 10,
-    backgroundColor: "#e0ffff",
+    backgroundColor: "#F0F0F0",
     height: 50,
     width: 250,
     border: "2px solid black",
   },
 
-
-
   modalView: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#e0ffff",
+    backgroundColor: "#F0F0F0",
     borderRadius: 20,
     borderWidth: 2,
     width: 280,
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: "red",
     height: 30,
     width: 100,
     border: "2px solid black",

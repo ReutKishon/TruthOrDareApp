@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Animated, Easing } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 const START_Y_POSITION = -210;
-// const SNOWFLAKE_TYPES = ["❄", "❅", "❆"];
+const MARK_TYPES = ["❤️️", "💀"];
 
 export default function QuestionMark({ scene }) {
   const [config, setConfig] = useState(() => getConfig());
@@ -65,7 +66,7 @@ export default function QuestionMark({ scene }) {
         },
       ]}
     >
-      ?
+      {MARK_TYPES[config.type]}
     </Animated.Text>
   );
 }
@@ -74,7 +75,7 @@ function getConfig() {
   const size = randomInt(10, 18);
   const opacity = randomInt(4, 10) / 10;
   const xPosition = `${randomInt(0, 100)}%`;
-
+  const type = randomInt(0, 1);
   const fallDuration = randomInt(10000, 30000);
   const fallDelay = randomInt(500, 10000);
 
@@ -85,6 +86,7 @@ function getConfig() {
     size,
     opacity,
     xPosition,
+    type,
     fallDelay,
     fallDuration,
     swingDuration,
@@ -97,7 +99,6 @@ function randomInt(min, max) {
 }
 const styles = StyleSheet.create({
   question_mark: {
-    color: "black",
     position: "absolute",
   },
 });

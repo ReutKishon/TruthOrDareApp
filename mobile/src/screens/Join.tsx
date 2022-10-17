@@ -1,15 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
-import { SafeAreaView, StyleSheet, TextInput, View } from "react-native";
+import {
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import axios from "axios";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { setGame } from "../app/game";
 import { socket, URL } from "../socket";
 import NextButton from "../shared/button";
+import QuestionMark from "../components/Questionmark";
+const dimensions = Dimensions.get("window");
+
 function NewGame({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [gameCode, setGameCode] = useState("");
   const nameInputRef = useRef(null);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -31,53 +40,55 @@ function NewGame({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        ref={nameInputRef}
-        style={styles.input}
-        onChangeText={setPlayerName}
-        placeholder="Please enter your name"
-        maxLength={10}
-      />
-      <TextInput
-        style={[styles.input, { margin: 10 }]}
-        keyboardType="numeric"
-        onChangeText={setGameCode}
-        placeholder="Please enter the code game"
-        maxLength={10}
-      />
-      <View style={{ margin: 12 }}>
-        <NextButton
-          text="start"
-          size={{ width: 250, height: 50 }}
-          onPress={onPress}
+    <View style={styles.container}>
+      <View style={{ flex: 1 }}></View>
+
+      {new Array(100).fill(true).map((_, i) => (
+        <QuestionMark key={i} scene={dimensions} />
+      ))}
+      <View style={{ flex: 2, alignItems: "center" }}>
+        <TextInput
+          ref={nameInputRef}
+          style={styles.input}
+          onChangeText={setPlayerName}
+          placeholder="Please enter your name"
+          maxLength={10}
         />
+        <TextInput
+          style={[styles.input, { margin: 10 }]}
+          keyboardType="numeric"
+          onChangeText={setGameCode}
+          placeholder="Please enter the code game"
+          maxLength={10}
+        />
+        <View style={{ margin: 12 }}>
+          <NextButton
+            text="start"
+            size={{ width: 250, height: 50 }}
+            onPress={onPress}
+          />
+        </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "white",
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   input: {
     padding: 10,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-    backgroundColor: "#e0ffff",
+    backgroundColor: "#F0F0F0",
     height: 50,
     width: 250,
     border: "2px solid black",
   },
 
-  warningText: {
-    color: "red",
-    fontSize: 12,
-  },
   modalView: {
     justifyContent: "center",
     alignItems: "center",

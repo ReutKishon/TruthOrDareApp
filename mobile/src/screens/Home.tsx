@@ -16,10 +16,11 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <View style={{ flex: 1 }}></View>
       <View style={{ flex: 2 }}>
-        <Header top={-60} />
+       
         {new Array(100).fill(true).map((_, i) => (
           <QuestionMark key={i} scene={dimensions} />
         ))}
+         <Header top={-60} />
         <View style={{ margin: 6 }}>
           <NextButton
             text="New game"
